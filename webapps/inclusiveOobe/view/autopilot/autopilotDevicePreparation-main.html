@@ -1,0 +1,232 @@
+<!-- Copyright (C) Microsoft. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" id="_htmlRoot" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/autopilot/autopilotDevicePreparation-page.js" src="/lib/require.js"></script>
+
+    <!-- General styling -->
+    <style>
+        .dpp-no-scroll {
+            overflow-y: hidden;
+        }
+
+        .inactive {
+            opacity: 0.6;
+        }
+
+        .icon-gears:before {
+            content: "\E713";
+        }
+
+        .icon-devices:before {
+            content: "\E975";
+        }
+
+        .icon-users:before {
+            content: "\E716";
+        }
+
+        .icon-base:before {
+            content: "\F136";
+        }
+
+        .icon-fill:before {
+            content: "\F137";
+        }
+
+        table,
+        td {
+            border: none !important;
+            vertical-align: top !important;
+            background-color: transparent !important;
+        }
+    </style>
+
+    <!-- Desktop Lite styling -->
+    <div data-bind="if: $root.isLiteWhitePersonality">
+        <style>
+            .scroll-view {
+                position: fixed;
+                height: calc(100% - 13.5em) !important;
+            }
+
+            .dpp-body-container {
+                max-width: calc(100% - 25px) !important;
+                padding-left: 0px !important;
+                margin-left: 0px !important;
+                background-color: transparent !important;
+            }
+
+            .body-sub-header {
+                color: WindowText;
+                opacity: 0.6;
+            }
+
+            .icon-checkmark-lite:before {
+                content: "\F13E";
+                color: #ffffff;
+            }
+
+            .status-icon {
+                display: inline-block !important;
+                font-family: "OobeMDL2";
+                font-style: normal;
+                font-size: 20px;
+                line-height: 23.44px;
+                height: 20px;
+                width: 20px;
+                margin: 0.5em;
+                background-color: rgba(0, 0, 0, 0.0) !important;
+            }
+
+            .glyph-lite {
+                display: inline-block !important;
+                align-items: center;
+                font-family: "OobeMDL2";
+                font-size: 20px;
+                line-height: 23.44px;
+            }
+
+            .status-icon-padding {
+                padding-right: 5px;
+            }
+    
+            .icon-exmark-lite:before {
+                content: "\F13D";
+            }
+
+            .icon-chevron-up:before {
+                font-family: "OobeMDL2";
+                content: "\E70E";
+                font-weight: bold;
+                font-size: 14px;
+                height: 20px;
+                padding-top: 0.5em;
+                color: ButtonText !important;
+            }
+
+            .icon-chevron-down:before {
+                font-family: "OobeMDL2";
+                content: "\E70D";
+                font-weight: bold;
+                font-size: 14px;
+                height: 20px;
+                padding-top: 0.25em;
+                color: ButtonText !important;
+            }
+    
+            .base-lite {
+                position: absolute;
+                font-size: 14px;
+                z-index: 2;
+            }
+    
+            .overlay-lite {
+                position: relative;
+                font-size: 14px;
+                z-index: 3;
+            }
+    
+            .success-lite {
+                color: #00b394;
+            }
+    
+            .failure-lite {
+                color: #eb0716;
+            }
+
+            .errorText {
+                color: #d92c2c;
+            }
+
+            .disabledText {
+                color: gray;
+            }
+
+            .progress-subtext {
+                text-align: center;
+            }
+
+            .glyph-cell-lite {
+                width: 0px;
+            }
+
+            .status-lite {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 15px;
+                line-height: 20px;
+                opacity: 0.6;
+                position: relative;
+            }
+
+            .buttonCell-lite {
+                position: absolute;
+                right: 0px;
+                padding-right: 1.5em;
+                background-color: rgba(0, 0, 0, 0.0) !important;
+            }
+
+            .hyperlink-blob {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 13px;
+                line-height: 15px;
+            }
+
+            .table {
+                display: table;
+            }
+
+            .table-row {
+                display: table-row;
+            }
+
+            .table-cell {
+                display: table-cell;
+            }
+        </style>
+    </div>
+</head>
+<body class="webapp-inner">
+    <div class="body-container" id="dpp-body-container">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: $root.pageTitle, subtitle: $root.pageLeadText"></oobe-header>
+
+            <!-- Desktop Lite View -->
+            <div data-bind="if: $root.isLiteWhitePersonality">
+                <p id="subheaderText" class="body-sub-header" data-bind="html: $root.subheaderText, css: { errorText: $root.errorOccurred() }" aria-live="polite" aria-role="alert"></p>
+
+                <!-- Display progress circle only while provisioning hasn't completed. -->
+                <div data-bind="if: $root.showProgress">
+                    <div>
+                        <oobe-light-progress params="progressText: progressStatusText, progressSubtext: progressStatusSubtext" class="app-content"></oobe-light-progress>
+                    </div>
+                </div>
+
+                <!-- Button explanatory text -->
+                <div data-bind="if: $root.skipButtonDisplayed">
+                    <p data-bind="html: $root.skipButtonDescription"></p>
+                </div>
+                <div data-bind="if: $root.resetButtonDisplayed">
+                    <p data-bind="html: $root.resetButtonDescription"></p>
+                </div>
+                <div data-bind="if: $root.exportLogsLinkDisplayed">
+                    <br />
+                    <br />
+                    <!-- Show the link as gray as long as it's still processing.  As long as it's processing, also disable click action. -->
+                    <a href="#" data-bind="css: { 'link' : $root.exportLogsLinkEnabled(), 'disabledText' : !$root.exportLogsLinkEnabled() }, text: $root.exportLogsLinkText, click: $root.exportLogsLinkEnabled() ? $root.onExportLogsLinkClickAsync.bind($root) : null"></a>
+                </div>
+            </div>
+        </div>
+
+        <oobe-footer class="holo-small-button" params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

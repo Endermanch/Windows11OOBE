@@ -1,0 +1,9 @@
+﻿<div class="page-header">
+    <!-- Page footer with navigation buttons within control-page -->
+    <div class="breadcrumbs align-center">
+        <backstack-chrome-breadcrumb></backstack-chrome-breadcrumb>
+        <ul role="status" data-bind="foreach: sections, attr: {'aria-label': currentSectionAccString}">
+            <li data-bind="text: $parent.resources()[$data.resID], css: {active: $data.name === $parent.currentSection()}" aria-hidden="true"></li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tokens>
+
+  <Category name="Voices" categoryBase="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore">
+    <Token name="MSTTS_V110_esMX_MilaM">
+      <String name="" value="Microsoft Mila Mobile - Spanish (Mexico)" />
+      <String name="LangDataPath" value="%windir%\Speech_OneCore\Engines\TTS\es-MX\MSTTSLocesMX.dat" />
+      <String name="LangUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\es-MX" />
+      <String name="VoicePath" value="%windir%\Speech_OneCore\Engines\TTS\es-MX\M2058Mila" />
+      <String name="VoiceUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\es-MX" />
+      <String name="80A" value="Microsoft Mila Mobile - Spanish (Mexico)" />
+      <String name="CLSID" value="{179F3D56-1B0B-42B2-A962-59B7EF59FE1B}" />
+      <Attribute name="Version" value="11.0" />
+      <Attribute name="Language" value="80A" />
+      <Attribute name="Gender" value="Female" />
+      <Attribute name="Age" value="Adult" />
+      <Attribute name="DataVersion" value="11.0.2016.0229" />
+      <Attribute name="SharedPronunciation" value="" />
+      <Attribute name="Name" value="Microsoft Mila Mobile" />
+      <Attribute name="Vendor" value="Microsoft" />
+      <Attribute name="PersonalAssistant" value="1" />
+      <Attribute name="EnableRusBackend" value="true" />
+    </Token>
+  </Category>
+  
+</Tokens>

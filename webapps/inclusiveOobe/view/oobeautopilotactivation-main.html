@@ -1,0 +1,32 @@
+﻿<!-- Copyright (C) Microsoft. All rights reserved. -->
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!-- WinJS resources-->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs resources-->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveoobe/js/oobeautopilotactivation-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content align-vertical-center">
+            <div class="control-progress">
+                <!-- ko if: shouldShowDesktopLiteView -->
+                <oobe-light-progress params="progressText: activationText" class="app-content"></oobe-light-progress>
+                <!-- /ko -->
+
+                <!-- ko ifnot: shouldShowDesktopLiteView -->
+                <progress class="win-ring win-large withText"></progress>
+                <h4 data-bind="{html: activationText}" aria-live="assertive" role="alert"></h4>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

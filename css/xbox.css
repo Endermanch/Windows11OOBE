@@ -1,0 +1,33 @@
+.control-progress h4 {
+  display: none;
+}
+
+.control-progress progress.win-ring.win-large {
+  width: 100px;
+  height: 100px;
+}
+
+@keyframes spinspin {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+progress.win-ring.win-large::-ms-fill {
+    animation-name: none;
+}
+
+progress {
+  background-image: url('../images/xbox-ring.svg');
+  background-color: transparent;
+  border: none;
+  animation: spinspin 1s linear infinite;
+}
+
+progress.win-ring.win-large {
+    left: 50%;
+    top: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index: 1;
+    position: absolute;
+}

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/inclusive-listview.css" />
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobeenterpriseprovisioning-page.js" src="/lib/require.js"></script>
+
+    <div data-bind="if: $root.shouldShowDefaultView">
+        <style>
+            .list > .list-item > .list-icon {
+                margin-top: 10px;
+            }
+        </style>
+    </div>
+
+    <div data-bind="if: $root.shouldShowDesktopLiteView">
+        <style>
+            .content-box-lite-padding {
+                padding-top: 15%;
+            }
+
+            .list-item {
+                border: 2px solid rgba(187, 188, 188, 0.6);
+                box-sizing: border-box;
+                border-radius: 4px 4px 0px 0px;
+            }
+        </style>
+    </div>
+</head>
+<body class="webapp-inner">
+    <div class="oobe-panel">
+        <div class="container-content">
+            <oobe-header params="title: title"></oobe-header>
+            <div class="content-box-lite-padding content-box">
+                <oobe-listview autofocus params="items: $root.items, selectedItem: $root.selectedItem, selectionFollowsFocus: false">
+                    <div class="list-icon" role="presentation" aria-hidden="true">
+                        <i class="icon" role="presentation" data-bind="html: icon"></i>
+                    </div>
+                    <div class="list-text">
+                        <div class="secondary-text" data-bind="text: valueText"></div>
+                        <div class="" data-bind="text: descriptionText"></div>
+                    </div>
+                </oobe-listview>
+            </div>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: flexStartHyperLinks, flexEndButtons: flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

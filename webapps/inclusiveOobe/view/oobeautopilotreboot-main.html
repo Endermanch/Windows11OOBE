@@ -1,0 +1,25 @@
+<!-- Copyright (C) Microsoft. All rights reserved. -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobeautopilotreboot-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <!-- ko if: isLiteWhitePersonality -->
+        <oobe-light-progress params="progressText: rebootMessageText" class="app-content"></oobe-light-progress>
+        <!-- /ko -->
+        <!-- ko ifnot: isLiteWhitePersonality -->
+        <oobe-progress params="progressText: rebootMessageText" class="app-content"></oobe-progress>
+        <!-- /ko -->
+    </div>
+</body>
+</html>

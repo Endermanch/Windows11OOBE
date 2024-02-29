@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+
+        <!--inclusive common css-->
+        <link href="/webapps/inclusiveOobe/css/inclusive-common.css" rel="stylesheet">
+
+        <!-- WinJS references -->
+        <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+        <!-- requirejs references -->
+        <script src="/core/js/require-helpers.js"></script>
+        <script src="/core/js/requirePath-config-core.js"></script>
+        <script data-main="/webapps/inclusiveOobe/js/oobelocalngc-page.js" src="/lib/require.js"></script>
+    </head>
+    <body class="webapp-inner">
+        <div class="body-container" data-bind="visible: contentContainerVisibility">
+            <div class="container-content">
+                <!-- ko if: $root.isLiteWhitePersonality-->
+                <oobe-header params="title: title, subtitle: leadText"></oobe-header>
+                <!-- /ko -->
+                <!-- ko if: !($root.isLiteWhitePersonality)-->
+                <oobe-header params="title: title"></oobe-header>
+                <div class="content-box">
+                    <div class="icon-container">
+                        <div class="icon icon-large icon-pinpad" role="img" data-bind="attr: { 'aria-label': ariaLabel }"></div>
+                    </div>
+                    <p class="secondary-text" data-bind="text: leadText"></p>
+                </div>
+                <!-- /ko -->
+            </div>
+            <oobe-footer params="flexEndButtons: flexEndButtons"></oobe-footer>
+        </div>
+    </body>
+</html>

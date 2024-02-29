@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities"
+         xmlns:wincap3="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities/3"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+         IgnorableNamespaces="uap uap3 mp wincap wincap3 rescap">
+  <Identity Name="Microsoft.Windows.CloudExperienceHost" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.26052.1000" ResourceId="neutral" />
+  <Properties>
+    <DisplayName>ms-resource:appDescription</DisplayName>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>images\storelogo.png</Logo>
+    <!-- This is the primary field that differs between root SystemApp and MUA/SUA variants -->
+    <uap:SupportedUsers>multiple</uap:SupportedUsers>
+  </Properties>
+  <Resources>
+    <Resource Language="en-US" />
+  </Resources>
+  <!-- The contents of AppxManifest must be kept in sync at the following locations under \onecoreuap\shell\cloudexperiencehost\onecore\app
+       - SystemApp\AppxManifest.xml
+       - moapp\appxmanifest.xml
+       - App\package.appxmanifest
+       - App\CloudExperienceHost.jsproj (note the jsproj contains an AppxSystemBinary entry per external <Extension>)
+       - app\Dll\CloudExperienceHostDll.vcxproj [WinMD not merged in CloudExperienceHostAPI only] -->
+  <Applications>
+    <Application Id="App" StartPage="default.html">
+      <uap:VisualElements
+        DisplayName="ms-resource:appDisplayName"
+        Description="ms-resource:appDescription"
+        AppListEntry="none"
+        BackgroundColor="#464646"
+        Square150x150Logo="images\Logo.png"
+        Square44x44Logo="images\SmallLogo.png">
+        <uap:SplashScreen Image="images\splashscreen.png" />
+      </uap:VisualElements>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Type="include" Match="https://prod.rewardsplatform.microsoft.com/" />
+        <uap:Rule Type="include" Match="https://www.microsoft.com/officeoobe/" />
+        <uap:Rule Type="include" Match="https://wwwqa.microsoft.com/officeoobe/" />
+        <uap:Rule Type="include" Match="https://onedrive.live.com/windows/" />
+        <uap:Rule Type="include" Match="https://account.live.com/" />
+        <uap:Rule Type="include" Match="https://login.live.com/" />
+        <uap:Rule Type="include" Match="https://oloobe.officeapps.live.com/" />
+        <uap:Rule Type="include" Match="https://oloobe.officeapps.live-int.com/" />
+        <uap:Rule Type="include" Match="https://login.microsoftonline.com/" />
+        <uap:Rule Type="include" Match="https://login.microsoft.com/" />
+        <uap:Rule Type="include" Match="https://login.windows.net/" />
+        <uap:Rule Type="include" Match="https://login.windows-ppe.net/" />
+        <uap:Rule Type="include" Match="https://signup.live.com/" />
+        <uap:Rule Type="include" Match="https://account.live-int.com/" />
+        <uap:Rule Type="include" Match="https://login.live-int.com/" />
+        <uap:Rule Type="include" Match="https://signup.live-int.com/" />
+        <uap:Rule Type="include" Match="https://buy.live.com/" />
+        <uap:Rule Type="include" Match="https://buy.live-int.com/" />
+        <uap:Rule Type="include" Match="https://passwordreset.microsoftonline.com/" />
+        <uap:Rule Type="include" Match="https://account.activedirectory.windowsazure.com/" />
+        <uap:Rule Type="include" Match="https://tip.passwordreset.microsoftonline.com/" />
+        <uap:Rule Type="include" Match="https://account.activedirectory.windowsazure.us/" />
+        <uap:Rule Type="include" Match="https://account.activedirectory.windowsazure.cn/" />
+        <uap:Rule Type="include" Match="https://passwordreset.activedirectory.windowsazure.cn/" />
+        <uap:Rule Type="include" Match="https://password.ccsctp.com/" />
+        <uap:Rule Type="include" Match="https://account.activedirectory-ppe.windowsazure.com/" />
+        <uap:Rule Type="include" Match="https://sdx.microsoft.com/"/>
+        <uap:Rule Type="include" Match="https://sdx.microsoft-ppe.com/"/>
+        <uap:Rule Type="include" Match="https://sdx.microsoft-int.com/"/>
+        <uap:Rule Type="include" Match="https://canary.sdx.microsoft.com/"/>
+        <!--Require this rule for winrt access on all local webapps -->
+        <uap:Rule Type="include" Match="ms-appx-web:///webapps/" WindowsRuntimeAccess="all" />
+        <uap:Rule Type="include" Match="ms-appx-web:///views/" WindowsRuntimeAccess="all" />
+        <!--Require this rule for winrt access from all retail demo local webapps -->
+        <uap:Rule Type="include" Match="ms-appx-web:///RetailDemo/" WindowsRuntimeAccess="all" />
+        <!--Require this rule for winrt access from the core webapp for the footer region -->
+        <uap:Rule Type="include" Match="ms-appx-web:///core/" WindowsRuntimeAccess="all" />
+        <!-- Begin rules for AAD sovereign instances -->
+        <uap:Rule Type="include" Match="https://login.microsoftonline.us/" />
+        <uap:Rule Type="include" Match="https://login.microsoftonline.de/" />
+        <uap:Rule Type="include" Match="https://login.partner.microsoftonline.cn/" />
+        <uap:Rule Type="include" Match="https://login.microsoftonline.eaglex.ic.gov/" />
+        <uap:Rule Type="include" Match="https://login.microsoftonline.microsoft.scloud/" />
+        <!-- End rules for AAD sovereign instances -->
+      </uap:ApplicationContentUriRules>
+      <Extensions>
+        <uap3:Extension Category="windows.appExtensionHost">
+          <uap3:AppExtensionHost>
+            <uap3:Name>com.microsoft.windows.extensionpackage</uap3:Name>
+          </uap3:AppExtensionHost>
+        </uap3:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-cxh" ReturnResults="optional" />
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-device-enrollment" ReturnResults="optional" />
+        </uap:Extension>
+        <uap:Extension Category="windows.webAccountProvider">
+          <uap:WebAccountProvider Url="https://login.live.com" BackgroundEntryPoint="MicrosoftAccount.TokenProvider.BackgroundTokenProvider" />
+        </uap:Extension>
+        <uap:Extension Category="windows.aboveLockScreen"/>
+        <wincap3:Extension Category="windows.internal.componentUI" />
+      </Extensions>
+    </Application>
+  </Applications>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.14393.0" MaxVersionTested="11.0.0.0" />
+  </Dependencies>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer" />
+    <uap:Capability Name="sharedUserCertificates" />
+    <uap:Capability Name="enterpriseAuthentication" />
+    <wincap:Capability Name="activityData"/>
+    <wincap:Capability Name="cloudExperienceHost" />
+    <wincap:Capability Name="coreShell" />
+    <wincap:Capability Name="liveIdService" />
+    <wincap:Capability Name="userSigninSupport" />
+    <wincap:Capability Name="targetedContent" />
+    <wincap:Capability Name="packageQuery" />
+    <rescap:Capability Name="packageManagement" />
+    <rescap:Capability Name="cellularDeviceIdentity" />
+    <rescap:Capability Name="deviceManagementAdministrator" />
+    <rescap:Capability Name="deviceManagementRegistration" />
+    <rescap:Capability Name="windowsHelloCredentialAccess" />
+    <DeviceCapability Name="microphone" />
+    <DeviceCapability Name="wiFiControl" />
+    <DeviceCapability Name="webcam" />
+  </Capabilities>
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.CloudExperienceHost.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.CloudExperienceHost.AppActivity" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.CloudExperienceHost.AppActivityRequired" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.CloudExperienceHost.WebAppActivity" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>MicrosoftAccount.TokenProvider.dll</Path>
+        <ActivatableClass ActivatableClassId="MicrosoftAccount.TokenProvider.BackgroundTokenProvider" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+</Package>

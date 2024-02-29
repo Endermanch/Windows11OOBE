@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/autopilotwhitegloveresult-page.js" src="/lib/require.js"></script>
+
+    <!-- Default Inclusive Blue styling -->
+    <div data-bind="if: $root.shouldShowDefaultView">
+        <style>
+            .category-box table {
+                width: 100%;
+            }
+
+            .category-box {
+                width: 100%;
+                margin-top: 10%;
+                margin-left: 15%;
+            }
+
+            td:nth-child(1) {
+                text-align: right;
+                padding-right: 1.5em;
+                padding-bottom: 1.5em;
+                font-family: 'Segoe UI Bold';
+            }
+
+            td:nth-child(2) {
+                padding-bottom: 1.5em;
+                max-width: 50%;
+                font-family: 'Segoe UI Semibold';
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .qr {
+                max-height: 50%;
+                max-width: 50%;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 15px;
+            }
+
+            .qr-category-container {
+                height: 50%;
+            }
+
+            .right {
+                float: right;
+            }
+
+            .left {
+                float: left;
+            }
+
+            .error {
+                color: #ffff00;
+            }
+
+            .success-background {
+                background: #007533;
+            }
+
+            .failure-background {
+                background: #750008;
+            }
+
+            .button-group, .space-between {
+                padding: 0 24px;
+            }
+
+            .failure-footer > .button-group button.win-button {
+                background: #5c0006;
+            }
+
+            .failure-footer > .button-group button.win-button.alt-button {
+                background-color: transparent;
+                color: #FFFFFF;
+            }
+
+            .failure-footer > .button-group button.win-button.alt-button[disabled] {
+                color: GrayText;
+            }
+
+            .success-footer > .button-group button.win-button {
+                background: #005c28;
+            }
+
+            @media (-ms-high-contrast) {
+                .failure-footer > .button-group button.win-button {
+                    background: ButtonFace;
+                    color: ButtonText;
+                }
+
+                .failure-footer > .button-group button.win-button.alt-button {
+                    background-color: ButtonFace;
+                    color: ButtonText;
+                }
+
+                .failure-footer > .button-group button.win-button.alt-button[disabled] {
+                    color: GrayText;
+                }
+
+                .success-footer > .button-group button.win-button {
+                    background: ButtonFace;
+                    color: ButtonText;
+                }
+            }
+        </style>
+    </div>
+
+    <!-- Desktop Lite styling -->
+    <div data-bind="if: $root.shouldShowDesktopLiteView">
+        <style>
+            p {
+                font-family: Segoe UI;
+            }
+
+            td:nth-child(1) {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0.1em;
+                margin: 0;
+                font-size: 16px;
+                line-height: 19px;
+            }
+
+            .category-box-lite {
+                width: 100%;
+                padding-top: 3%;
+            }
+
+            .error-lite {
+                color: #CD320E;
+                font-family: "Segoe UI Variable", "Segoe UI";
+            }
+
+            .category-lite {
+                font-weight: bold;
+                color: rgba(0, 0, 0, 0.6);
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-weight: 700;
+                padding-bottom: 1.5em;
+            }
+
+            .value-lite {
+                color: rgba(0, 0, 0, 0.6);
+                font-family: "Segoe UI Variable", "Segoe UI";
+            }
+
+            .scrollableSection {
+                max-height: 50%;
+            }
+
+            .resultInstructionsBlob {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 13px;
+                line-height: 15px;
+                padding-top: 1em;
+                padding-bottom: 1em;
+            }
+
+            .viewDiagnosticsBlob {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 13px;
+                line-height: 15px;
+                padding-bottom: 1em;
+            }
+
+            .qrCodeMessageBlob {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 13px;
+                line-height: 21px;
+            }
+
+            .qr {
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 15px;
+                padding-top: 3%;
+            }
+        </style>
+    </div>
+</head>
+<body class="webapp-inner">
+    <!-- Default view -->
+    <div class="body-container" data-bind="css: resultBackground, visible: $root.shouldShowDefaultView">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: title"></oobe-header>
+            <div class="qr-category-container">
+                <div class="content-box left" id="categoriesBox">
+                    <table class="category-box" id="categories" role="presentation">
+                        <tr>
+                            <td class="category" data-bind="text: organizationText"></td>
+                            <td class="status" id="organization" data-bind="text: organizationName"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" data-bind="text: profileText"></td>
+                            <td class="status" id="profile" data-bind="text: profileName"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" data-bind="text: assignedUserText"></td>
+                            <td class="status" id="assignedUser" data-bind="text: assignedUserName"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" data-bind="text: elapsedTimeText"></td>
+                            <td class="status" id="elapsedTimeNumber" data-bind="text: elapsedTimeNumber"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="content-box right" id="qrContent">
+                    <img class="qr" id="qrAssignmentCode" />
+                </div>
+            </div>
+            <p data-bind="text: subHeaderErrorText"></p>
+            <div class="control-progress" data-bind="visible: isLoading">
+                <progress class="win-ring win-medium withText"></progress>
+            </div>
+            <p data-bind="html: subHeaderText, css: provisioningTextStyle"></p>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: flexStartHyperLinks, flexEndButtons: flexEndButtons" data-bind="css: showResultFooter"></oobe-footer>
+    </div>
+
+    <!-- Desktop Lite view -->
+    <div class="body-container" data-bind="visible: $root.shouldShowDesktopLiteView && $root.showUIElements">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: $root.title"></oobe-header>
+            <p id="errorMessageSubtitle" class="error-lite body-sub-header" data-bind="html: $root.errorMessage"></p>
+
+            <div id="scrollableSection" class="scroll-view">
+                <table id="deploymentInfoBlob" class="category-box-lite" id="categories" role="presentation">
+                    <tr>
+                        <td>
+                            <span class="category-lite" data-bind="text: $root.organizationText"></span>
+                            <span class="value-lite" id="organization" data-bind="text: $root.organizationName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="category-lite" data-bind="text: $root.profileText"></span>
+                            <span class="value-lite" id="profile" data-bind="text: $root.profileName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="category-lite" data-bind="text: $root.assignedUserText"></span>
+                            <span class="value-lite" id="assignedUser" data-bind="text: $root.assignedUserName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="category-lite" data-bind="text: $root.elapsedTimeText"></span>
+                            <span class="value-lite" id="elapsedTimeNumber" data-bind="text: $root.elapsedTimeNumber"></span>
+                        </td>
+                    </tr>
+                </table>
+                <p id="resultInstructionsBlob" class="resultInstructionsBlob" data-bind="html: $root.resultInstructionsText"></p>
+        
+                <!-- Only show in failure case -->
+                <div id="failureBlob" data-bind="visible: $root.isFailure">
+                    <p id="viewDiagnosticsBlob" class="viewDiagnosticsBlob" data-bind="visible: $root.showDiagnosticsHyperlinkEnabled">
+                        <span data-bind="text: viewDiagnosticsText"></span> <a class="link" tabindex="0" role="link" 
+                        data-bind="text: $root.viewDiagnosticsHyperlinkText, click: $root.onDiagnosticsClickAsync, event: {keypress: $root.onDiagnosticsKeyPressAsync}"></a>.
+                    </p>
+                    <p id="qrCodeMessageBlob" class="qrCodeMessageBlob" data-bind="text: $root.qrCodeMessageText, visible: $root.isFailure"></p>
+                    <img id="qrCodeImageLite" class="qr" />
+                </div>
+            </div>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

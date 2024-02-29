@@ -1,0 +1,12 @@
+/*! Copyright (C) Microsoft Corporation. All rights reserved. */
+@import "light-iframe-content.css";
+
+body {
+    color: #303030 !important;
+    background: rgba(255,255,255,0.6) !important;
+}
+
+body * {
+    color: #303030 !important;
+    background: transparent !important;
+}

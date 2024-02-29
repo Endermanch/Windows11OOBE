@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html id="_htmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <title>OOBE</title>
+
+    <!-- WinJS references -->
+    <script src="../Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="../Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- bridge references -->
+    <script src="../js/bridge.js"></script>
+
+    <!-- page references -->
+    <script src="../js/core.js"></script>
+    <script src="../js/uihelpers.js"></script>
+    <script src="../js/events.js"></script>
+    <script src="../js/cortanaPage.js"></script>
+</head>
+<body>
+    <div class="control-app">
+        <div class="app-content">
+            <div class="control-page">
+                <div class="page-body">
+                    <header class="body-header" aria-labelledby="cortanaIntro">
+                        <h2 id="cortanaIntro" role="presentation"></h2>
+                    </header>
+
+                    <div class="body-container" id="_pageContent">
+                        <div class="container-content">
+                            <p class="content-lead" tabindex="-1" id="cortanaContent" style="margin-bottom:20px;" aria-labelledby="cortanaContent"></p>
+
+                            <div style="text-align:center; max-width:672px;">
+                                <img id="cortanaAnimation" width="80"/>
+                                <br/>
+                                <h3 id="cortanaPersonaText" tabindex="-1" style="margin-top:-10px;" aria-labelledby="cortanaPersonaText"></h3>
+                            </div>
+                        </div>
+
+                        <div class="container-footer">
+                            <div class="footer-content">
+                                <ul class="control-actionLinks" role="presentation">
+                                    <li role="presentation"><a href="#" id="learnMoreLink"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="page-footer">
+                    <div class="footer-icons">
+                        <button id="easeOfAccess" class="icon icon-win-easeOfAccess"></button>
+                        <button id="inputSwitcher" class="icon icon-win-keyboardStandard"></button>
+                    </div>
+
+                    <div class="footer-buttons template-buttonGroup">
+                        <button id="setCortanaOptOut" class="win-button control-button"></button>
+                        <button id="cortanaNextButton" autofocus class="win-button control-button button_primary"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flyouts -->
+    <div id="learnMoreFlyout" data-win-control="WinJS.UI.Flyout" aria-label="{Flyout control}" style="height:100%;">
+        <div>
+            <h2 id="learnMoreHeadline" tabindex="-1" aria-labelledby="learnMoreHeadline"></h2>
+            <p id="learnMoreBody" tabindex="-1" aria-labelledby="learnMoreBody"></p>
+            <p id="learnMoreBody2" tabindex="-1" aria-labelledby="learnMoreBody2"></p>
+        </div>
+    </div>
+</body>
+</html>

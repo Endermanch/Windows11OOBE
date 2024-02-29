@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html id="_rdxHtmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+
+    <!-- WinJS references -->
+    <script src="../Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="../Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- Page references -->
+    <script src="../js/core.js"></script>
+    <script src="../js/uihelpers.js"></script>
+    <script src="../js/bridge.js"></script>
+    <script src="../js/events.js"></script>
+    <script src="../js/environment.js"></script>
+    <script src="retailDemoShared.js"></script>
+    <script src="retailDemoSecurityInclusive.js"></script>
+
+    <!-- requirejs references -->
+    <script src="../core/js/require-helpers.js"></script>
+    <script src="../core/js/requirePath-config-core.js"></script>
+    <script src="../lib/require.js"></script>
+
+    <style>
+        @media(-ms-high-contrast) {
+            .win-toggleswitch:focus {
+                display: inline;
+                outline: 2px solid Highlight;
+            }
+            option {
+                background-color: Window;
+                color: WindowText;
+            }
+        }
+        .content-header {
+            margin-bottom: auto !important;
+        }
+        /* It is variation of existing css class "template-tooltip.tooltipType_error" and only overrides the high contrast media query rest is duplicate of this template-tooltip.tooltipType_error".
+           This change fixes an accessibility issue in high contrast mode. The duplication was to limit and contain the effect of this change to RDX pages only. */
+        .template-tooltip.tooltipType_error_rdx {
+            color: #C42B1C;
+        }
+        @media (-ms-high-contrast) {
+            .template-tooltip.tooltipType_error_rdx {
+                color: Highlight;
+            }
+        }
+    </style>
+
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header>
+                <div class="content-header">
+                    <div class="body-header">
+                        <h1 id="securityTitle"></h1>
+                    </div>
+                    <div class="secondary-text" id="securityText"></div>
+                </div>
+            </oobe-header>
+            <div class="fields">
+
+                <fieldset aria-labelledby="passwordManagmentLegend">
+                    <legend id="passwordManagmentLegend"></legend>
+                    <div class="template-input">
+                        <div id="passwordManagementToggle" data-win-control="WinJS.UI.ToggleSwitch" data-win-options="{ checked: true}"></div>
+                    </div>
+                </fieldset>
+
+                <fieldset id="timeoutElements" aria-labelledby="timeoutLegend">
+                    <legend id="timeoutLegend"></legend>
+                    <div class="template-input">
+                        <select id="timeoutSelect" aria-labelledby="timeoutLegend"></select>
+                    </div>
+                </fieldset>
+
+                <fieldset id="passwordElements" aria-labelledby="passwordLegend" style="display:none;">
+                    <legend id="passwordLegend"></legend>
+
+                    <table cellpadding="0" cellspacing="0" role="presentation">
+                        <tr role="presentation">
+                            <td role="presentation">
+                                <div class="template-input">
+                                    <input id="passwordInput" type="password" class="win-textbox" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr role="presentation">
+                            <td role="presentation">
+                                <div class="template-input">
+                                    <input id="passwordInputCheck" type="password" class="win-textbox" />
+                                    <div id="passwordError" class="input-errorDialog" role="alert" aria-live="assertive" style="display:none" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+
+        <oobe-footer>
+            <div class="button-group space-between">
+                <div class="align-self-start"></div>
+                <div class="align-self-end">
+                    <button id="nextButton" class="win-button button_primary"></button>
+                </div>
+            </div>
+        </oobe-footer>
+    </div>
+</body>
+</html>

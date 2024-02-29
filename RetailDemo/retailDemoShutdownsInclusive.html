@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html id="_rdxHtmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+
+    <!-- WinJS references -->
+    <script src="../Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="../Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- Page references -->
+    <script src="../js/core.js"></script>
+    <script src="../js/uihelpers.js"></script>
+    <script src="../js/bridge.js"></script>
+    <script src="../js/environment.js"></script>
+    <script src="../js/events.js"></script>
+    <script src="retailDemoShared.js"></script>
+    <script src="retailDemoShutdownsInclusive.js"></script>
+    
+    <!-- requirejs references -->
+    <script src="../core/js/require-helpers.js"></script>
+    <script src="../core/js/requirePath-config-core.js"></script>
+    <script src="../lib/require.js"></script>
+
+    <style>
+        td {
+            vertical-align:middle;
+            padding-right:10px;
+        }
+    </style>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header>
+                <div class="content-header">
+                    <div class="body-header">
+                        <h1 id="rdamTitle"></h1>
+                    </div>
+                    <div class="body-sub-header" id="shutdownText"></div>
+                </div>
+            </oobe-header>
+            <div>
+                <table cellpadding="0" cellspacing="0" role="presentation">
+                    <tr role="presentation">
+                        <td role="presentation">
+                            <span id="mondayLegend" aria-labelledby="mondayLegend"></span>
+                        </td>
+                        <td role="presentation">
+                            <div id="mondayTime" aria-labelledby="mondayLegend" data-win-control="WinJS.UI.TimePicker" data-win-options="{current:'10:00 PM'}"></div>
+                        </td>
+                    </tr>
+                    <tr role="presentation">
+                        <td role="presentation">
+                            <span id="tuesdayLegend" aria-labelledby="tuesdayLegend"></span>
+                        </td>
+                        <td role="presentation">
+                            <div id="tuesdayTime" aria-labelledby="tuesdayLegend" data-win-control="WinJS.UI.TimePicker" data-win-options="{current:'10:00 PM'}"></div>
+                        </td>
+                    </tr>
+                    <tr role="presentation">
+                        <td role="presentation">
+                            <span id="wednesdayLegend" aria-labelledby="wednesdayLegend"></span>
+                        </td>
+                        <td role="presentation">
+                            <div id="wednesdayTime" aria-labelledby="wednesdayLegend" data-win-control="WinJS.UI.TimePicker" data-win-options="{current:'10:00 PM'}"></div>
+                        </td>
+                    </tr>
+                    <tr role="presentation">
+                        <td role="presentation">
+                            <span id="thursdayLegend" aria-labelledby="thursdayLegend"></span>
+                        </td>
+                        <td role="presentation">
+                            <div id="thursdayTime" aria-labelledby="thursdayLegend" data-win-control="WinJS.UI.TimePicker" data-win-options="{current:'10:00 PM'}"></div>
+                        </td>
+                    </tr>
+                    <tr role="presentation">
+                        <td role="presentation">
+                            <span id="fridayLegend" aria-labelledby="fridayLegend"></span>
+                        </td>
+                        <td role="presentation">
+                            <div id="fridayTime" aria-labelledby="fridayLegend" data-win-control="WinJS.UI.TimePicker" data-win-options="{current:'10:00 PM'}"></div>
+                        </td>
+                    </tr>
+                    <tr role="presentation">
+                        <td role="presentation">
+                            <span id="saturdayLegend" aria-labelledby="saturdayLegend"></span>
+                        </td>
+                        <td role="presentation">
+                            <div id="saturdayTime" aria-labelledby="saturdayLegend" data-win-control="WinJS.UI.TimePicker" data-win-options="{current:'10:00 PM'}"></div>
+                        </td>
+                    </tr>
+                    <tr role="presentation">
+                        <td role="presentation">
+                            <span id="sundayLegend" aria-labelledby="sundayLegend"></span>
+                        </td>
+                        <td role="presentation">
+                            <div id="sundayTime" aria-labelledby="sundayLegend" data-win-control="WinJS.UI.TimePicker" data-win-options="{current:'10:00 PM'}"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <p id="timeZoneText" class="content-lead" aria-labelledby="timeZoneText"></p>
+            </div>
+        </div>
+        <oobe-footer>
+            <div class="button-group space-between">
+                <div class="align-self-start">
+                    <div id="useOfflineShutdownToggle" data-win-control="WinJS.UI.ToggleSwitch"></div>
+                </div>
+                <div class="align-self-end">
+                    <button id="cancelButton" class="win-button"></button>
+                    <button id="nextButton" class="win-button button_primary"></button>
+                </div>
+            </div>
+        </oobe-footer>
+    </div>
+</body>
+</html>

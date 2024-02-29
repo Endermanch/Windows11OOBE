@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html id="_rdxHtmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>RDX OOBE</title>
+
+    <!-- WinJS references -->
+    <script src="../Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="../Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- Page references -->
+    <script src="../js/core.js"></script>
+    <script src="../js/uihelpers.js"></script>
+    <script src="../js/bridge.js"></script>
+    <script src="../js/events.js"></script>
+    <script src="../js/environment.js"></script>
+
+    <!-- requirejs references -->
+    <script src="../core/js/require-helpers.js"></script>
+    <script src="../core/js/requirePath-config-core.js"></script>
+    <script data-main="retailDemoAdvancedInclusive.js" src="../lib/require.js"></script>
+
+    <style>
+        .fields fieldset table tr td div  {
+            padding-right: 10px;
+        }
+        .fields fieldset table tr td button {
+            float: right;
+            white-space: normal;
+            height: auto;
+        }
+    </style>
+
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header>
+                <div class="content-header">
+                    <div class="body-header">
+                        <h1 id="advancedTitle" role="presentation"></h1>
+                    </div>
+                    <div class="body-sub-header"></div>
+                </div>
+            </oobe-header>
+            <div class="fields">
+
+                <fieldset aria-labelledby="shutdownLegend" id="shutdownField">
+                    <legend id="shutdownLegend"></legend>
+
+                    <table cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                        <tr role="presentation">
+                            <td role="presentation">
+                                <div id="shutdownInfo" aria-live="assertive"></div>
+                            </td>
+                            <td role="presentation">
+                                <button id="shutdownButton" class="win-button control-button button_primary"></button>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                </fieldset>
+
+                <fieldset aria-labelledby="removeRdxLegend" id="removeRdxField">
+                    <legend id="removeRdxLegend"></legend>
+
+                    <table cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                        <tr role="presentation">
+                            <td role="presentation">
+                                <div id="removeRdxInfo" aria-live="assertive"></div>
+                            </td>
+                            <td role="presentation">
+                                <button id="removeRdxButton" class="win-button control-button button_primary"></button>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                </fieldset>
+
+                <fieldset aria-labelledby="controlPanelLegend" id="controlPanelField">
+                    <legend id="controlPanelLegend"></legend>
+
+                    <table cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                        <tr role="presentation">
+                            <td role="presentation">
+                                <div id="controlPanelInfo" aria-live="assertive"></div>
+                            </td>
+                            <td role="presentation">
+                                <button id="controlPanelButton" class="win-button control-button button_primary"></button>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                </fieldset>
+
+            </div>
+        </div>
+        <oobe-footer>
+            <div class="button-group space-between">
+                <div class="align-self-start"></div>
+                <div class="align-self-end">
+                    <button id="nextButton" class="win-button button_primary"></button>
+                </div>
+            </div>
+        </oobe-footer>
+    </div>
+</body>
+</html>

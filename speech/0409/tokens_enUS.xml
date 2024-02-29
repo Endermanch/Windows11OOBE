@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tokens>
+
+  <Category name="Voices" categoryBase="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore">
+    <Token name="MSTTS_V110_enUS_EvaM">
+      <String name="" value="Microsoft Eva Mobile - English (United States)" />
+      <String name="LangDataPath" value="%windir%\Speech_OneCore\Engines\TTS\en-US\MSTTSLocenUS.dat" />
+      <String name="LangUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\en-US" />
+      <String name="VoicePath" value="%windir%\Speech_OneCore\Engines\TTS\en-US\M1033Eva" />
+      <String name="VoiceUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\en-US" />
+      <String name="409" value="Microsoft Eva Mobile - English (United States)" />
+      <String name="CLSID" value="{179F3D56-1B0B-42B2-A962-59B7EF59FE1B}" />
+      <Attribute name="Version" value="11.0" />
+      <Attribute name="Language" value="409" />
+      <Attribute name="Gender" value="Female" />
+      <Attribute name="Age" value="Adult" />
+      <Attribute name="DataVersion" value="11.0.2013.1022" />
+      <Attribute name="SharedPronunciation" value="" />
+      <Attribute name="Name" value="Microsoft Eva Mobile" />
+      <Attribute name="Vendor" value="Microsoft" />
+      <Attribute name="PersonalAssistant" value="1" />
+    </Token>
+  </Category>
+
+  <Category name="UXLanguages" categoryBase="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore">
+    <Token name="en-US">
+      <String name="CortanaVoice" value="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\CortanaVoices\Tokens\MSTTS_V110_enUS_EvaM" />
+      <Dword name="CortanaVoiceGender" value="1" />
+      <String name="Culture" value="en-US" />
+      <String name="Language" value="1033" />
+      <String name="Recognizer" value="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Recognizers\Tokens\MS-1033-110-WINMO-DNN" />
+      <String name="Voice" value="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens\MSTTS_V110_EnUS_ZiraM" />
+      <String name="VoiceGender" value="1" />
+      <Attribute name="Language" value="409" />
+    </Token>
+  </Category>
+  
+</Tokens>

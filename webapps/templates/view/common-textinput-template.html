@@ -1,0 +1,13 @@
+﻿<div class="input-errorDialog" data-bind="if: showError">
+    <div class="errorDialog-dialogRoot tooltipType_error template-tooltip" role="alert">
+        <p data-bind="text: errorText"></p>
+    </div>
+</div>
+<div class="template-input input-centered">
+    <input class="win-textbox"
+           size="40"
+           data-bind="attr:{'aria-label': ariaLabel, placeholder: placeHolder, maxLength: maxLength, type: inputType, autofocus: autoFocus, id: id}, textInput: inputText, hasFocus: hasFocus, disable: disable" />
+</div>
+<div class="content-description">
+    <p class="secondary-text" data-bind="html: inputTextCaption"></p>
+</div>

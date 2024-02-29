@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/ooberegion-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner" data-bind="oobeHotKeys: optinHotKey">
+    <div class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: $root.title, supportClickableTitle: $root.supportClickableTitle"></oobe-header>
+            <div class="content-box">
+                <oobe-listview params="items: $root.items, selectedItem: $root.selectedItem, listAccessibleName: $root.listAccessibleName">
+                    <div class="listItemHeader" data-bind="text: displayName"></div>
+                </oobe-listview>
+            </div>
+        </div>
+        <oobe-footer params="flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

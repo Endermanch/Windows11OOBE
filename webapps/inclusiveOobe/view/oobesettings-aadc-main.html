@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/common.css" />
+    <!--WinJS references-->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobesettings-aadc-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <main class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction">
+        <div class="container-content">
+            <oobe-header params="title: title, subtitle: subTitleText"></oobe-header>
+            <!-- ko ifnot: learnMoreVisible -->
+            <div class="content-box vertical-center-content">
+                <!-- ko foreach: subtexts -->
+                <div class="text-content-block">
+                    <div class="text-content-header" data-bind="text: $data.header" role="heading" aria-level="2"></div>
+                    <div class="text-content-body" data-bind="text: $data.bodyText"></div>
+                </div>
+                <!-- /ko -->
+            </div>
+            <!-- /ko -->
+
+            <!-- ko if: learnMoreVisible -->
+            <div class="iframe-row med-iframe">
+                <iframe class="eula-iframe" x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" id="learnMoreIFrame" data-bind="iframeContent: { content:$root.learnMoreContent, dir:document.documentElement.dir, focusBody: true }, attr: { 'aria-label': resourceStrings.LearnMoreTitle }"></iframe>
+            </div>
+            <!-- /ko -->
+        </div>
+        <oobe-footer params="flexEndButtons: flexEndButtons"></oobe-footer>
+    </main>
+</body>
+</html>

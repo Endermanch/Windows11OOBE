@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobeprovisioningstatus-page.js" src="/lib/require.js"></script>
+    <style>
+        .prov-category {
+          float: left;
+          width: 80%;
+        }
+        .prov-state {
+          float: right;
+          width: 20%;
+        }
+        /*
+            The standardized style for error text is defined in tooltipType_error, but it is designed for
+            text input control and hard to resue in this case without refactoring.
+
+            This page is only used in inclusive desktop OOBE for now. If we decides to broaden the usage to
+            other platforms. We will need to move this style into the platform CSS files.
+            %SDXROOT%\onecoreuap\shell\cloudexperiencehost\onecore\app\App\css\source\*.css
+        */
+        .prov-error {
+          color: #C42B1C;
+        }
+        @media (-ms-high-contrast) {
+          .prov-error {
+            color: -ms-hotlight;
+          }
+        }
+    </style>
+</head>
+<body class="webapp-inner" data-bind="oobeProvHotKeys: hotKeyEnabled">
+    <div class="body-container">
+        <div class="container-content no-scroll">
+            <!--Page header-->
+            <div class="content-header" style="max-height: 120px; min-height: 120px;">
+                <div class="body-header">
+                    <h2><!--ko text: title--><!--/ko--></h2>
+                </div>
+                <div class="body-sub-header"><!--ko text: subHeaderText--><!--/ko--></div>
+            </div>
+
+            <!--Page body-->
+            <div class="content-box">
+                <div style="height: 80%">
+                    <div class="scroll-view" role="group">
+                        <div class="list" role="presentation" tabIndex="-1" aria-multiselectable="false" aria-required="true">
+                            <!-- ko foreach: provResults -->
+                            <div class="list-item" tabIndex="-1" role="presentation" style="padding: 5px 5px;">
+                                <div class="prov-category win-type-ellipsis" data-bind="text: contentCategory, css: { 'prov-error': hasError() }"></div>
+                                <div class="prov-state win-type-ellipsis">
+                                    <!-- ko if: isRunning -->
+                                        <progress id="progressBar" class="win-progress-bar win-large"></progress>
+                                    <!-- /ko -->
+
+                                    <!-- ko ifnot: isRunning -->
+                                        <div data-bind="text: localizedCompletionState, css: { 'prov-error': hasError() }"></div>
+                                    <!-- /ko -->
+                                </div>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="win-button alt-button" data-bind="click: onGetLogs, text: getLogsText, visible: !disableRemediationButtons()"></button>
+                </div>
+            </div>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: flexStartHyperLinks, flexEndButtons: flexEndButtons"></oobe-footer>
+    </div>
+    <div id="provCommonConfirmDlg" data-win-control="WinJS.UI.ContentDialog">
+    </div>
+</body>
+</html>

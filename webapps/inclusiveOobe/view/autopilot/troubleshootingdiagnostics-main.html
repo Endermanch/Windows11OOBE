@@ -1,0 +1,541 @@
+<!-- Copyright (C) Microsoft. All rights reserved. -->
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/autopilot/troubleshootingDiagnostics-page.js" src="/lib/require.js"></script>
+    <script>
+        // TAB CONTROLS
+
+        // Constants for tab control
+        var TAB_CONTENT_CLASS_NAME = "tabContent";
+        var TAB_LINKS_CLASS_NAME = "win-button tabLinks";
+        var ACTIVE_TAB_LINKS_CLASS_NAME = "win-button tabLinks active";
+
+        function hideTabs() {
+            // Get all elements with class=TAB_CONTENT_CLASS_NAME and hide them
+            let tabContent = document.getElementsByClassName(TAB_CONTENT_CLASS_NAME);
+
+            for (let i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+        }
+
+        function hideTabLinks() {
+            // Get all elements with class=TAB_LINKS_CLASS_NAME and remove the class "active"
+            let tabLinks = document.getElementsByClassName(TAB_LINKS_CLASS_NAME);
+
+            for (let i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].className = TAB_LINKS_CLASS_NAME;
+            }
+        }
+
+        function enableTab(evt, tabName) {
+            // Show the tab with class=<tabName> and set class to ACTIVE_TAB_LINKS_CLASS_NAME for the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className = ACTIVE_TAB_LINKS_CLASS_NAME;
+        }
+
+        function openTab(evt, tabName) {
+            // Open tab with id=<tabName>
+            hideTabs();
+            hideTabLinks();
+            enableTab(evt, tabName);
+        }
+
+        function openDefaultTab() {
+            document.getElementById("tabButtonClickedOnLoad").click();
+        }
+
+        // ACCORDION CONTROLS
+        function openAccordionPanel(element) {
+            // Toggle between adding and removing the "active" class, to highlight the button that controls the panel
+            element.classList.toggle("accordionActive");
+
+            // Toggle between hiding and showing the active panel
+            var panel = element.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        }
+    </script>
+
+    <style>
+        /* Icons */
+
+        .statusIcon {
+            font-family: "OobeMDL2";
+            font-style: normal;
+            font-size: 21px;
+            color: #FFFFFF;
+            height: 21px;
+            width: 21px;
+        }
+
+        .icon-check:before {
+            content: "\F13E";
+            border-radius: 50%;
+            background-color: #57A300;
+            padding-left: 2px;
+            padding-bottom: 2px;
+        }
+
+        .icon-error:before {
+            content: "\F13D";
+            border-radius: 50%;
+            background-color: #E81123;
+            padding-left: 2px;
+            padding-bottom: 2px;
+        }
+
+        .icon-inProgress:before {
+            content: "\F752";
+            border-radius: 50%;
+            background-color: #015CDA;
+        }
+
+        .icon-warning:before {
+            content: "\F12F";
+            position: absolute;
+            font-size: 32px;
+        }
+
+        .icon-warning-deployment:before {
+            transform: translate(-78%, -31.5%);
+        }
+
+        .icon-warning-accordion:before {
+            transform: translate(-80%, -31.5%);
+        }
+
+        .icon-warning-appsPolicy:before {
+            transform: translate(-78.5%, -31.5%);
+        }
+
+        .icon-warning-triangleBackground {
+            width: 0;
+            position: absolute;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 21px solid #DB7500;
+            padding: 0px;
+        }
+
+        .icon-warning-deploymentBackground {
+            margin-top: -0.5em;
+        }
+
+        .icon-warning-appsPolicyBackground {
+            margin-top: 0.5em;
+            margin-left: 0.25em;
+        }
+
+        /* Tabs and content container */
+
+        /* Styling tab content. Note: hidden by default except for the tab marked with 'openDefaultTab' */
+        .tabContent {
+            display: none;
+            height: 58% !important;
+            max-height: 464px !important;
+        }
+
+        .win-button.tabLinks {
+            border: none !important;
+            outline: none;
+            cursor: pointer;
+            float: left;
+            width: 33%;
+            max-width: 33%;
+            background-color: transparent;
+            border-bottom-style: solid !important;
+            opacity: 0.5;
+            border-bottom-color: white !important;
+            height: 4em;
+        }
+
+        .win-button.tabLinks:focus,
+        .win-button.tabLinks:hover {
+            background-color: Highlight;
+        }
+
+        .tab {
+            width: 100%;
+            min-width: 450px;
+        }
+
+        /* Make the background of the button solid if it is clicked on (add the .active class with JS) */
+        .tab button.active {
+            opacity: 1;
+        }
+
+        .diagnosticData-container {
+            width: 83% !important;
+            margin-top: -5em;
+            flex-direction: column;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .scrollTabContent {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* Tables in all tabs */
+
+        .label {
+            font-weight: bold !important;
+            font-size: 15px;
+        }
+
+        .appAndPolicyGroupLabel {
+            font-size: 15px;
+            opacity: 0.6;
+        }
+
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        th {
+            text-align: left;
+            font-size: 13px;
+            font-weight: normal;
+            opacity: 0.6;
+            border-bottom: none;
+        }
+
+        td {
+            font-size: 14px;
+            border-bottom: none;
+        }
+
+        td:not(:first-child) {
+            opacity: 0.6;
+        }
+
+        .configTableRoot td:first-child {
+            opacity: 0.6;
+        }
+
+        .configTable {
+            margin-top: -1em;
+        }
+
+        .configTable th,
+        .configTable td {
+            padding: 0px;
+        }
+
+        .deploymentTable,
+        .deploymentTable tr {
+            border: 2px solid rgba(187, 188, 188, 0.4);
+        }
+
+        .deploymentTable th,
+        .deploymentTable td {
+            padding-left: 1.2em;
+        }
+
+        .categoryTableRoot,
+        .resourceTableRoot,
+        .deploymentTableRoot {
+            position: relative;
+        }
+
+        .deploymentTable th {
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .deploymentStatusIcon {
+            margin-left: 1.5em;
+        }
+
+        .deploymentStatusHeaderText {
+            padding-left: 1.7em !important;
+        }
+
+        #tabCategoryDeploymentOverview {
+            margin-top: 2em;
+        }
+
+        /* Accordion buttons and the associated panels */
+
+        /* Style the buttons that are used to open and close the accordion panel */
+        .win-button.accordion {
+            background-color: rgba(0, 0, 0, 0.45);
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            max-width: 100%;
+            text-align: left;
+            transition: 0.4s;
+            height: auto;
+            border: 2px solid rgba(187, 188, 188, 0.6);
+            box-sizing: border-box;
+        }
+
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        .accordionActive,
+        .accordion:hover {
+            background-color: #0078D4;
+        }
+
+        .accordion:after {
+            font-family: "OobeMDL2";
+            content: "\E70D"; /* chevron down icon */
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: bold;
+            float: right;
+            margin-top: -2.8em;
+            margin-right: 1em;
+        }
+
+        .accordionActive:after {
+            content: "\E70E"; /* chevron up icon */
+        }
+
+        @media (-ms-high-contrast) {
+            .accordion:focus:after,
+            .accordion:hover:after,
+            .accordionActive:hover:after {
+                color: HighlightText;
+            }
+        }
+
+        /* Style the accordion panel. Note: hidden by default */
+        .panel {
+            display: none;
+            overflow: hidden;
+        }
+
+        .accordionHeaderText {
+            margin-left: 4.1em;
+        }
+
+        .accordionStatusIcon {
+            float: left;
+            margin-left: 1.1em;
+            margin-top: 1.4em;
+        }
+
+        /* Error pages */
+
+        .errorAdditionalInformation {
+            margin-top: 6em;
+        }
+
+        .boldErrorAdditionalInfo {
+            font-weight: bold;
+        }
+
+        .diagnosticError,
+        .diagnosticLogExportError {
+            margin-top: -4em;
+        }
+
+        .errorInformation {
+            margin: 0.5em;
+        }
+    </style>
+</head>
+
+<body class="webapp-inner" onload="openDefaultTab()">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header params="title: pageTitle"></oobe-header>
+
+            <div class="diagnosticData-renderingProgress" data-bind="visible: shouldShowDataRenderingProgress">
+                <!-- Marching ants animation -->
+                <div class="control-progress align-vertical-center">
+                    <progress class="win-ring win-large ring-primary withText"></progress>
+                    <h4 data-bind="text: DIAGNOSTICS_PAGE_RENDERING_TEXT" aria-live="assertive" aria-role="alert" tabindex="0"></h4>
+                </div>
+            </div>
+
+            <div class="diagnosticData-container" data-bind="visible: shouldShowDiagnosticData">
+                <!-- Top navigation bar -->
+                <div class="tab">
+                    <button class="win-button tabLinks" onclick="openTab(event, 'tabConfigurationInfo')"><h4 data-bind="text: CONFIGURATION_TITLE"></h4></button>
+                    <button class="win-button tabLinks" onclick="openTab(event, 'tabCategoryDeploymentOverview')"><h4 id="tabButtonClickedOnLoad" data-bind="text: DEPLOYMENT_TITLE"></h4></button>
+                    <button class="win-button tabLinks" onclick="openTab(event, 'tabAppAndPolicyStatus')"><h4 data-bind="text: APPS_AND_POLICY_TITLE"></h4></button>
+                </div>
+
+                <!-- Tab content -->
+
+                <!-- Configuration Info tab content -->
+                <div class="scrollTabContent tabContent" id="tabConfigurationInfo">
+                    <div class="configTableRoot" data-bind="foreach: configurationInfoTab">
+                        <h4 class="label" data-bind="text: categoryName"></h4>
+                        <table class="configTable">
+                            <colgroup>
+                                <col style="width:25%">
+                                <col style="width:75%">
+                            </colgroup>
+                            <tbody data-bind="foreach: items">
+                                <tr>
+                                    <td class="property" data-bind="text: propertyName"></td>
+                                    <td class="value" data-bind="text: value"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Deployment Info tab content -->
+                <div class="scrollTabContent tabContent" id="tabCategoryDeploymentOverview">
+                    <div class="deploymentTableRoot" data-bind="foreach: deploymentInfoByCategory">
+                        <!-- If there are no associated events populated, do not show the category -->
+                        <div data-bind="if: (events && events.length != 0)">
+                            <!-- Render each category as an accordion panel -->
+                            <button class="win-button accordion" onclick="openAccordionPanel(this)">
+                                <div class="accordionStatusIcon">
+                                    <span data-bind="css: {
+                                    statusIcon: !!status,
+                                    'icon-check': (status == 5 || status == 6 || status == 7),
+                                    'icon-error': (status == 1 || status == 2),
+                                    'icon-inProgress' : (status == 4),
+                                    'icon-warning icon-warning-accordion icon-warning-triangleBackground': (status == 3)
+                                }"></span>
+                                </div>
+                                <h4 class="accordionHeaderText" data-bind="text: categoryName"></h4>
+                            </button>
+                            <div class="panel">
+                                <table class="deploymentTable">
+                                    <colgroup>
+                                        <col style="width:10%">
+                                        <col style="width:20%">
+                                        <col style="width:20%">
+                                        <col style="width:20%">
+                                        <col style="width:30%">
+                                    </colgroup>
+                                    <thead>
+                                        <!-- The following header only shows once per category -->
+                                        <tr>
+                                            <th class="deploymentStatusHeaderText" data-bind="text: $parent.STATUS_HEADING"></th>
+                                            <th data-bind="text: $parent.EVENT_HEADING"></th>
+                                            <th data-bind="text: $parent.START_TIME_HEADING"></th>
+                                            <th data-bind="text: $parent.FINISH_TIME_HEADING"></th>
+                                            <th data-bind="text: $parent.DETAILS_HEADING"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: events">
+                                        <tr>
+                                            <td>
+                                                <div class="deploymentStatusIcon">
+                                                    <span data-bind="css: {
+                                                    statusIcon: !!status,
+                                                    'icon-check': (status == 5 || status == 6 || status == 7),
+                                                    'icon-error': (status == 1 || status == 2),
+                                                    'icon-inProgress' : (status == 4),
+                                                    'icon-warning icon-warning-deployment icon-warning-triangleBackground icon-warning-deploymentBackground' : (status == 3)
+                                                    }"></span>
+                                                </div>
+                                            </td>
+                                            <td data-bind="text: eventName"></td>
+                                            <td data-bind="text: startTime"></td>
+                                            <td data-bind="text: finishTime"></td>
+                                            <td data-bind="text: details"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- App and Policy Status tab content -->
+                <div class="scrollTabContent tabContent" id="tabAppAndPolicyStatus">
+                    <!-- If there is no provisioned resource data, show nothing -->
+                    <div data-bind="if: ($root.provisionedResourceData() && $root.provisionedResourceData().length != 0)">
+                        <!-- Iterate through the different resource types and populate their resource groupings in the view -->
+                        <div class="categoryTableRoot" data-bind="foreach: $root.provisionedResourceData().categories">
+                            <!-- Show only if there exists provisioned resource data for a given resource type -->
+                            <div data-bind="if: ($data.resources && $data.resources.length != 0)">
+                                <h4 class="label" data-bind="text: $data.categoryName"></h4>
+                                <!-- Iterate through the each resource grouping of a like type and populate its resource events in the view -->
+                                <div class="resourceTableRoot" data-bind="foreach: $data.resources">
+                                    <!-- Show only if there exists resource events for a resource grouping -->
+                                    <div data-bind="if: ($data.events && $data.events.length != 0)">
+                                        <h4 class="appAndPolicyGroupLabel" data-bind="text: $data.resourceName"></h4>
+                                        <table>
+                                            <colgroup>
+                                                <col style="width: 10%">
+                                                <col style="width: 20%">
+                                                <col style="width: 20%">
+                                                <col style="width: 20%">
+                                                <col style="width: 30%">
+                                            </colgroup>
+                                            <thead>
+                                                <!-- This heading appears once for each resource grouping -->
+                                                <tr>
+                                                    <th data-bind="text: $root.STATUS_HEADING"></th>
+                                                    <th data-bind="text: $root.EVENT_HEADING"></th>
+                                                    <th data-bind="text: $root.START_TIME_HEADING"></th>
+                                                    <th data-bind="text: $root.FINISH_TIME_HEADING"></th>
+                                                    <th data-bind="text: $root.DETAILS_HEADING"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-bind="foreach: events">
+                                                <tr>
+                                                    <td data-bind="css: {
+                                                        statusIcon: !!$data.status,
+                                                        'icon-check': ($data.status == 5 || $data.status == 6 || $data.status == 7),
+                                                        'icon-error': ($data.status == 1 || $data.status == 2),
+                                                        'icon-inProgress' : ($data.status == 4),
+                                                        'icon-warning icon-warning-appsPolicy icon-warning-triangleBackground icon-warning-appsPolicyBackground' : ($data.status == 3)
+                                                        }"></td>
+                                                    <td data-bind="text: $data.eventName"></td>
+                                                    <td data-bind="text: $data.startTime"></td>
+                                                    <td data-bind="text: $data.finishTime"></td>
+                                                    <td data-bind="text: $data.details"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="diagnosticError text-align-center" data-bind="visible: shouldShowError">
+                <p data-bind="text: errorSubHeader"></p>
+                <div class="errorAdditionalInformation">
+                    <h4 class="boldErrorAdditionalInfo" data-bind="text: ERROR_ADDITIONAL_INFO_HEADING"></h4>
+                    <p class="errorInformation" data-bind="text: errorCode"></p>
+                    <p class="errorInformation" data-bind="text: errorDescription"></p>
+                </div>
+            </div>
+
+            <div class="diagnosticData-logsExport" data-bind="visible: shouldShowLogsExportProgress">
+                <!-- Export logs spinner -->
+                <div class="control-progress align-vertical-center" data-bind="visible: shouldShowLogsExportSpinner">
+                    <progress class="win-ring win-large ring-primary withText"></progress>
+                    <h4 data-bind="text: DIAGNOSTICS_PAGE_LOGS_EXPORT_PROGRESS_TEXT" aria-live="assertive" aria-role="alert" tabindex="0">></h4>
+                </div>
+                <!-- Log export error page -->
+                <div class="diagnosticLogExportError text-align-center" data-bind="visible: shouldShowLogsExportError">
+                    <p data-bind="text: logExportErrorSubheader"></p>
+                </div>
+            </div>
+        </div>
+
+        <oobe-footer params="flexEndButtons: flexEndButtons"></oobe-footer>
+    </div>
+</body>
+
+</html>

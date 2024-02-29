@@ -1,0 +1,18 @@
+﻿<div id="oobeFrameRoot" class="inclusiveOOBEBackground">
+    <!-- Center window horizontally and establish min and max widths -->
+    <div class="app-content">
+        <!--
+        // Control: Page
+        // Define page wrapper around body content & establish margins. Includes page
+        // header and footer. Can have multiple control-page elements to show/hide
+        // page views.
+        //-->
+        <div class="control-page ready">
+            <oobe-chrome-breadcrumb></oobe-chrome-breadcrumb>
+            <!-- frame contentview -->
+            <div class="page-body oobe-contentview" data-bind='component: contentViewName'></div>
+            <!-- footer webview is inserted in next element via code, to avoid having an extraneous webview from KnockoutJS precreating templates and duplicating their DOM trees into the real page -->
+            <div class="page-footer" data-bind="addFooterWebView: true"></div>
+        </div>
+    </div>
+</div>

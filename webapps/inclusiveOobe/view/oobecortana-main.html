@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--inclusive common css-->
+    <link href="/webapps/inclusiveOobe/css/inclusive-common.css" rel="stylesheet">
+
+    <!-- WinJS resources-->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs resources-->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobecortana-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="oobe-panel cortanaPanel" data-panel-index="0" data-bind="panelIndexVisible: $root.currentPanelIndex">
+            <div id="mainPage" class="container-content">
+                <oobe-header params="title: cortanaHeadingText, subtitle: cortanaSubheadingText"></oobe-header>
+                <img data-bind="attr: { alt: cortanaResources.cortanaLogoAlt_globalConsent }" id="cortanaImage"
+                    src="/webapps/inclusiveOobe/media/oobe-cortana-skills.svg" style="max-height: 300px; margin-top: -65px" />
+                <div class="opt-in-text" style="margin: 12px 56px">
+                    <p data-bind="html: cortanaResources.legalText_globalConsent" class="app-body" style="text-align: center"></p>
+                    <div data-bind="visible: talkToCortanaCheckboxVisible">
+                        <div class="template-input inputType_checkbox" style="margin: 0 auto">
+                            <div class="template-input inputType_checkbox" style="display: flex; min-width: 0; width: auto; margin: 0 auto">
+                                <input class="win-checkbox" type="checkbox" id="talkToCortanaCheckbox" data-bind="checked: talkToCortanaCheckboxValue" />
+                                <label for="talkToCortanaCheckbox" data-bind="text: talkToCortanaCheckboxText" style="width: 100%"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <oobe-footer params="flexStartButtons: $root.learnMoreButton, flexEndButtons: $root.endButtons"></oobe-footer>
+        </div>
+        <div class="oobe-panel cortanaPanel" data-panel-index="1" data-bind="panelIndexVisible: $root.currentPanelIndex">
+            <div id="learnMorePage" class="container-content">
+                <oobe-header params="title: cortanaResources.learnMoreHeadline"></oobe-header>
+                <div class="app-body">
+                    <p data-bind="html: cortanaResources.learnMoreBody"></p>
+                    <br />
+                    <p data-bind="html: cortanaResources.learnMoreBody2"></p>
+                </div>
+            </div>
+            <oobe-footer params="flexEndButtons: $root.learnMoreEndButtons"></oobe-footer>
+        </div>
+    </div>
+</body>
+</html>
+<!-- Override the subtitle font size  -->
+<style type="text/css">
+    .body-sub-header {font-size: 20px}
+</style>

@@ -1,0 +1,174 @@
+﻿@font-face {
+  font-family: OobeMDL2;
+  src: url('/fonts/OOBMDL2.ttf');
+}
+
+.icon-oobe {
+  font-family: "OobeMDL2";
+  font-style: normal;
+}
+
+.icon-keyboard:before {
+  content: "\F18D";
+}
+
+.icon-keyboard.icon-large {
+  font-size: 160px;
+  display: block;
+  clear: both;
+  line-height: 160px;
+}
+
+.icon-hello:before {
+    content: "\EB68";
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+}
+
+.icon-office:before {
+    content: "\EB6E";
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+}
+
+.icon-phone:before {
+    content: "\F6E8";
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+}
+
+.icon-onedrive:before {
+    content: "\E941";
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+}
+
+.icon-activity:before {
+    content: "\E7C4";
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+}
+
+.userGlyph {
+    margin-top: 15px;
+    font-family: 'Segoe MDL2 Assets';
+    font-size: 40px;
+    text-align: center;
+}
+
+.userGlyph:after {
+    content: "\E77B";
+}
+
+.icon-face-animation {
+  background: none;
+  width: auto; }
+
+/* Should these be updated in inclusive-desktop.css? */
+.control-page, .page-body {
+    height: 100%;
+}
+
+/* This is required for proper hosting of oobe-panels */
+.body-container, .container-content {
+    position: relative;
+}
+
+/* Panel elements themselves should all exactly match the body-container size and position an occupy the same space*/
+.oobe-panel {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make sure we beat the overly specific styles in inclusive-desktop.css to hide the panels until they're ready */
+body:not(.pageLoaded) .oobe-panel,
+body:not(.pageLoaded) .page-body .body-container .oobe-panel, 
+body:not(.pageLoaded) .control-app .control-page .page-body .body-container .container-content .oobe-panel {
+    display: none;
+}
+
+body:not(.pageLoaded) {
+    opacity: 0;
+}
+
+.panel-subheader {
+    text-align: center;
+}
+
+.voice-over {
+    display:none;
+}
+
+.error-voice-over {
+    display:none;
+}
+
+oobe-button {
+    display: inline-block;
+}
+
+.iframeFlyout {
+    /* So we don't create scrollbars before this is shown due to overflow:auto on body */
+    height: 0px;
+    overflow: hidden;
+}
+
+    .iframeFlyout iframe {
+        width: 400px;
+        height: 300px;
+    }
+
+.eula-iframe {
+    min-width: 200px;
+}
+
+oobe-textinput {
+    max-width: 480px;
+}
+
+/* Consider merging into include-desktop.css */
+.center-background {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: auto;
+    height: 100%;
+    width: 100%;
+}
+
+.img-responsive-container-center {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.device-pairing-img {
+    max-width: 480px;
+    max-height: 320px;
+}
+
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}
+
+/* Used for intro+outro animations. For now, hide these in high contrast */
+@media (-ms-high-contrast) {
+    .animationCanvas {
+        visibility: hidden;
+    }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobeeula-page.js" src="/lib/require.js"></script>
+</head>
+<body class="control-app" data-bind="oobeHotKeys: optinHotKey">
+    <div class="app-content">
+        <div class="control-page">
+            <div class="page-body holo-eula-style">
+                <oobe-header params="title: title, supportClickableTitle: false"></oobe-header>
+                <div class="body-container scrollable-container" data-bind="oobePageDefaultAction: pageDefaultAction">
+                    <div class="container-content">
+                        <iframe class="eula-iframe scrollable-content" x-ms-format-detection="none" role="presentation" sandbox="allow-same-origin" data-bind="iframeContent: { content: $root.msEulaFileContent, dir: document.documentElement.dir, preventLinkNavigation: true, addStyleSheet: $root.frameStyleSheetPath, frameTitle: $root.msEulaAriaLabel, pageDefaultAction: $root.pageDefaultAction }"></iframe>
+                        <!-- ko if: showOEMEula -->
+                        <iframe class="eula-iframe scrollable-content" x-ms-format-detection="none" role="presentation" sandbox="allow-same-origin" data-bind="iframeContent: { content:$root.oemEulaFileContent, dir: document.documentElement.dir, preventLinkNavigation: true, frameTitle:oemEulaAriaLabel, pageDefaultAction: $root.pageDefaultAction }"></iframe>
+                        <!-- /ko -->
+                    </div>
+                    <div class="scrollbar">
+                        <button id="ScrollUpButton" class="win-button control-button icon icon-win-chevronUp scrollbar-up" data-bind="click: onScrollUp"></button>
+                        <button id="ScrollDownButton" class="win-button control-button icon icon-win-chevronDown scrollbar-down" data-bind="click: onScrollDown"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer holo-eula-style">
+                <oobe-footer params="flexEndButtons: flexEndButtons"></oobe-footer>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

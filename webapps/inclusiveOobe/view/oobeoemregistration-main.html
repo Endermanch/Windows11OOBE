@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobeoemregistration-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction">
+        <div class="oobe-panel" data-bind="panelIndexVisible: $root.currentPanelIndex">
+            <div class="container-content">
+                <oobe-header params="title: title, subtitle: subHeaderText"></oobe-header>
+                <div class="content-box scrollable">
+                    <div class="customerInfoFields">
+                        <div class="input-label text-caption" data-bind="text: $root.resourceStrings.NameBlockLabel"></div>
+                        <div class="nameFields template-input">
+                            <div class="input-container input-row">
+                                <input type="text" class="win-textbox input-field" autofocus data-bind="textInput: customerInfo.firstName.value,
+                                attr: { placeholder: customerInfo.firstName.label, 'aria-label': customerInfo.firstName.label }" />
+                                <input type="text" class="win-textbox input-field" data-bind="textInput: customerInfo.lastName.value,
+                                attr: { placeholder: customerInfo.lastName.label, 'aria-label': customerInfo.lastName.label }" />
+                            </div>
+                        </div>
+                        <div class="input-label text-caption" data-bind="text: $root.resourceStrings.EmailBlockLabel"></div>
+                        <div class="template-input">
+                            <div class="input-container" data-bind="with: customerInfo.email">
+                                <input type="email" class="win-textbox input-field" data-bind="textInput: value,
+                                attr: { 'placeholder': label, 'aria-label': label }" />
+                            </div>
+                        </div>
+                        <div class="input-label text-caption" data-bind="text: customerInfo.region.label"></div>
+                        <div class="template-input">
+                            <div class="input-container" data-bind="with: customerInfo.region">
+                                <select class="win-dropdown" data-bind="options: $root.regions, optionsText: 'displayName',
+                                value: value, optionsCaption: '', attr: { 'aria-label': label }"></select>
+                            </div>
+                        </div>
+                        <!-- ko if: showPhoneNumber -->
+                        <div class="input-label text-caption" data-bind="text: customerInfo.phoneNumber.label"></div>
+                        <div class="nameFields template-input">
+                            <div class="input-container input-row">
+                                <!-- ko if: isLiteWhitePersonality -->
+                                <select class="win-dropdown select-field" data-bind="options: $root.countryCodeSelectOptions, optionsText: 'displayName',
+                                value: customerInfo.phoneNumber.value.countryCode, optionsCaption: '', attr: { 'aria-label': $root.resourceStrings.PhoneNumberCountryCodeLabel}"></select>
+                                <!-- /ko -->
+                                <!-- ko ifnot: isLiteWhitePersonality -->
+                                <select class="win-dropdown input-field" data-bind="options: $root.countryCodeSelectOptions, optionsText: 'displayName',
+                                value: customerInfo.phoneNumber.value.countryCode, optionsCaption: '', attr: { 'aria-label': $root.resourceStrings.PhoneNumberCountryCodeLabel}"></select>
+                                <!-- /ko -->
+                                <input type="tel" class="win-textbox input-field" data-bind="textInput: customerInfo.phoneNumber.value.number,
+                                attr: { 'placeholder': $root.resourceStrings.PhoneNumberFieldPlaceholder, 'aria-label': $root.resourceStrings.PhoneNumberFieldPlaceholder }" />
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                    <!-- ko if: linkFields.length > 0 -->
+                    <p>
+                        <!-- ko with: linkFields[0] -->
+                        <a class="link" href="#" data-bind="text: label, click: $root.disableControl() ? null : $root.onOemLinkClicked.bind($root)"></a>
+                        <!-- /ko -->
+                    </p>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <oobe-footer params="flexEndButtons: [
+                         {
+                             buttonText: $root.resourceStrings.SkipButtonText,
+                             buttonClickHandler: $root.onSkipCustomerInfo.bind($root),
+                             isVisible: !$root.hideSkip,
+                             disableControl: $root.disableControl
+                         },
+                         {
+                             buttonText: $root.resourceStrings.NextButtonText,
+                             buttonClickHandler: $root.onSubmitCustomerInfo.bind($root),
+                             disableControl: $root.disableControl,
+                             isPrimaryButton: true
+                         }]"></oobe-footer>
+        </div>
+        <div class="oobe-panel" data-bind="panelIndexVisible: $root.currentPanelIndex">
+            <div class="container-content">
+                <oobe-header params="title: title, subtitle: subHeaderText"></oobe-header>
+                <div class="checkBoxFields vertical-center-content">
+                    <!-- ko with: customerInfoField -->
+                    <div class="template-input inputType_checkbox">
+                        <input id="customerInfoCheckbox" class="win-checkbox" type="checkbox" data-bind="checked: value" />
+                        <label for="customerInfoCheckbox" data-bind="text: label"></label>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko foreach: checkBoxFields -->
+                    <div class="template-input inputType_checkbox">
+                        <input class="win-checkbox" type="checkbox" data-bind="checked: value, attr: { id: 'checkBoxField' + $index() }" />
+                        <label data-bind="text: label, attr: { for: 'checkBoxField' + $index() }"></label>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko foreach: linkFields.slice(1) -->
+                    <p>
+                        <a class="link" href="#" data-bind="text: label, click: $root.disableControl() ? null : $root.onOemLinkClicked.bind($root)"></a>
+                    </p>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <oobe-footer params="flexEndButtons: [{ buttonText: $root.resourceStrings.NextButtonText, buttonClickHandler: $root.onSubmitAdditionalFields.bind($root), disableControl: $root.disableControl, isPrimaryButton: true}]"></oobe-footer>
+        </div>
+    </div>
+    <div id="linkFlyout" class="iframeFlyout" aria-hidden="true">
+        <iframe id="linkFlyoutIFrame" sandbox="allow-same-origin" role="presentation"></iframe>
+    </div>
+</body>
+</html>

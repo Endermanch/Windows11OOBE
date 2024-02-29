@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--inclusive common css-->
+    <link href="/webapps/inclusiveOobe/css/inclusive-common.css" rel="stylesheet">
+
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script src="/lib/lottie.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobehello-page.js" src="/lib/require.js"></script>
+</head>
+    <body class="webapp-inner">
+        <div class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction, visible: contentContainerVisibility">
+            <!-- ko if: !$root.learnMoreVisible() -->
+            <div class="container-content no-scroll">
+                <oobe-header id="oobeHeader" params="title: title, subtitle: subtitle"></oobe-header>
+                <!-- ko if: !$root.isConfirmationPageVisible() -->
+                <div class="content-box">
+                    <!-- ko if: isMultiChoice -->
+                    <!-- ko if: !isLiteWhitePersonality -->
+                    <oobe-listview autofocus params="items: items, selectedItem: selectedItem, listAccessibleName: resourceStrings.HelloMultiListAccessibleName">
+                        <div class="list-icon" role="img" data-bind="attr: { 'aria-label': ariaLabel }">
+                            <span class="icon" role="presentation" data-bind="css: { 'icon-face': face, 'icon-fingerprint': fingerprint }"></span>
+                        </div>
+                        <div>
+                            <div class="secondary-text" data-bind="text: title"></div>
+                            <div data-bind="text: description"></div>
+                        </div>
+                    </oobe-listview>
+                    <!-- /ko -->
+                    <!-- ko if: isLiteWhitePersonality -->
+                    <p>
+                    <a id="helloSwitchHyperlink" class="link" href="#" data-bind="click: onSwitchEnrollmentKindClick, text: switchEnrollmentKindText"></a>
+                    </p>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: !isMultiChoice && !isLiteWhitePersonality-->
+                    <!-- ko if: enrollmentKinds.face -->
+                    <div class="icon-container face-icon-container">
+                        <img id="helloFaceAnimation" class="icon icon-large icon-face-animation" role="img" data-bind="attr: { 'alt': ariaLabel }">
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: enrollmentKinds.fingerprint -->
+                    <div class="icon-container">
+                        <div class="icon icon-large icon-fingerprint" role="img" data-bind="attr: { 'aria-label': ariaLabel }"></div>
+                    </div>
+                    <!-- /ko -->
+                    <p class="secondary-text" data-bind="text: leadText"></p>
+                    <!-- /ko -->
+                    <a id="helloLearnMoreLink" class="link" href="#" data-bind="click: onLearnMoreClick, text: resourceStrings.HelloLearnMoreLinkText"></a>
+                </div>
+                <!-- /ko -->
+            </div>
+            <oobe-footer id="helloFlexEndButtons" params="flexStartHyperLinks: flexStartHyperLinks, flexEndButtons: flexEndButtons"></oobe-footer>
+            <!-- /ko -->
+            <!-- ko if: $root.learnMoreVisible() -->
+            <div class="container-content">
+                <oobe-header params="title: resourceStrings.HelloLearnMoreLinkText"></oobe-header>
+                <div class="iframe-row med-iframe">
+                    <iframe id="hello-learnmore-iframe" x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" data-bind="iframeContent: { content:$root.learnMoreContent, dir:document.documentElement.dir, focusBody: true }, attr: { 'aria-label': resourceStrings.HelloLearnMoreLinkText }"></iframe>
+                </div>
+                <oobe-footer params="flexEndButtons: flexEndButtonsLearnMore"></oobe-footer>
+            </div>
+            <!-- /ko -->
+        </div>
+    </body>
+</html>

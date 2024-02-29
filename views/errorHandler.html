@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Error</title>
+
+    <!-- WinJS references -->
+    <script src="../Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="../Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- Page references -->
+    <script src="../js/core.js"></script>
+    <script src="../js/errorHandler.js"></script>
+</head>
+<body>
+    <div class="app-content">
+        <div class="control-page">
+            <div class="page-body">
+                <header class="body-header" aria-labelledby="_title" role="alert">
+                    <h2 id="_title" data-win-res="{textContent: '/Errors/Title'}" role="presentation"></h2>
+                </header>
+                <div class="body-container">
+                    <div class="container-content">
+                        <p tabindex="-1" id="_errorText" aria-labelledby="_errorText" data-win-res="{textContent: '/Errors/Text'}" role="alert"></p>
+                        <p tabindex="-1" id="_accountErrorText" aria-labelledby="_accountErrorText" data-win-res="{textContent: '/Errors/AccountText'}" role="alert"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer">
+                <div class="footer-icons">
+                    <button id="EaseOfAccess" type="button" class="icon icon-win-easeOfAccess"></button>
+                </div>
+
+                <div class="footer-buttons template-buttonGroup">
+                    <button id="_retryButton" class="win-button control-button" data-win-res="{textContent: '/Errors/Retry'}"></button>
+                    <button id="_cancelButton" class="win-button control-button button_primary" data-win-res="{textContent: '/Errors/Cancel'}"></button>
+                    <button id="_localAccountButton" class="win-button control-button button_primary" data-win-res="{textContent: '/Errors/LocalAccount'}"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

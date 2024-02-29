@@ -1,0 +1,489 @@
+<!-- Copyright (C) Microsoft. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../css/oobe-lite.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/autopilot/troubleshootingDiagnostics-page.js" src="/lib/require.js"></script>
+    <style>
+        /* Icons */
+        .statusIcon {
+            display: inline-block !important;
+            font-family: "OobeMDL2";
+            font-style: normal;
+            font-size: 20px;
+            color: #FFFFFF;
+            height: 20px;
+            width: 20px;
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+        }
+
+        .icon-small {
+            font-size: 14px !important;
+            height: 14px !important;
+        }
+
+        .icon-check:before {
+            content: "\F13E";
+            border-radius: 50%;
+            font-size: 20px;
+            height: 20px;
+            background-color: #57A300;
+            padding-left: 2px;
+            padding-bottom: 2px;
+        }
+
+        .icon-error:before {
+            content: "\F13D";
+            border-radius: 50%;
+            font-size: 20px;
+            height: 20px;
+            background-color: #E81123;
+            padding-left: 2px;
+            padding-bottom: 2px;
+        }
+
+        .icon-inProgress:before {
+            content: "\F752";
+            border-radius: 50%;
+            font-size: 20px;
+            height: 20px;
+            background-color: #015CDA;
+        }
+
+        .icon-warning:before {
+            content: "\F736";
+            font-size: 24px;
+            height: 24px;
+            padding-left: 2px;
+            padding-bottom: 2px;
+            color: #DB7500;
+        }
+
+        .icon-warning-position {
+            vertical-align: -5px;
+        }
+
+        .icon-chevron-up:before {
+            font-family: "OobeMDL2";
+            content: "\E70E";
+            font-weight: bold;
+            font-size: 14px;
+            height: 20px;
+            color: ButtonText !important;
+        }
+
+        .icon-chevron-down:before {
+            font-family: "OobeMDL2";
+            content: "\E70D";
+            font-weight: bold;
+            font-size: 14px;
+            height: 20px;
+            color: ButtonText !important;
+        }
+
+        /* Deployment Info View */
+        .diagnostic-report-view-container {
+            background-color: transparent;
+            max-width: calc(100% - 25px) !important;
+            position: relative;
+            padding: 0;
+            margin: 0;
+        }
+
+        .scroll-view {
+            overflow-x: hidden !important;
+            min-height: calc(100% - 1em) !important;
+        }
+
+        table {
+            table-layout: fixed;
+        }
+
+        table, tr {
+            border: none;
+            width: 100%;
+        }
+
+        .tab-name-cell {
+            text-align: left !important;
+            display: inline-block;
+            font-family: 'Segoe UI Variable';
+            font-size: 20px;
+            line-height: 21px;
+        }
+
+        .collapse-message {
+            float: right;
+            padding-top: 0.4em;
+            padding-right: 0.5em;
+        }
+
+        .collapse-chevron {
+            float: right;
+        }
+
+        .category-button {
+            width: 100% !important;
+        }
+
+        .category-button-contents {
+            text-align: left;
+            padding-top: 1em;
+            padding-bottom: 1em;
+        }
+
+        .diagnostic-event-subcategory-name-label {
+            margin-top: 1em;
+            margin-bottom: 2em;
+            margin-left: 1.5em;
+        }
+
+        .subcategory-name-label {
+            font-family: 'Segoe UI Variable';
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .diagnostic-data-blob {
+            background-color: #EDEBE9 !important;
+        }
+        
+        .diagnostic-data-l2-indent {
+            margin-left: 1.5em !important;
+        }
+
+        .diagnostic-data-l3-indent {
+            margin-left: 2.5em !important;
+        }
+
+        .diagnostic-data-button {
+            max-width: calc(100% - 1.5em) !important;
+            text-align: left !important;
+        }
+        
+        .resource-event-button {
+            max-width: calc(100% - 2.5em) !important;
+            text-align: left !important;
+        }
+
+        .label-word-wrap {
+            word-wrap: break-word;
+        }
+
+        .diagnostic-data-table {
+            padding-left: 1.5em !important;
+            padding-bottom: 1em !important;
+        }
+
+        .diagnostic-data-label-cell {
+            width: 35% !important;
+        }
+
+        .diagnostic-data {
+            font-family: 'Segoe UI Variable';
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .static-data-value {
+            overflow-wrap: break-word;
+        }
+
+        /* Error views */
+        .diagnostic-report-error-view-container {
+            margin-top: -4em;
+        }
+
+        .error-view-additional-information-blob {
+            margin-top: 3em;
+        }
+
+        .error-view-additional-information-header {
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .error-view-additional-information-details {
+            margin: 0.5em;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .error-lite {
+            color: #CD320E !important;
+        }
+
+        .export-logs-success-view-blob {
+            font-size: 20px !important;
+            line-height: 23px !important;
+            text-align: center !important;
+            color: #404040 !important;
+            margin-top: 6em !important;
+        }
+
+        /* Overwrite text color in high contrast mode for better readability */
+        @media (-ms-high-contrast) {
+            .diagnostic-data-blob {
+                background: ButtonFace !important;
+            }
+
+            .diagnostic-data-blob:enabled:focus {
+                border-color: Highlight !important;
+                background: Highlight !important;
+                color: HighlightText !important;
+            }
+        }
+
+        /* Overwrite text color in non-high contrast mode for better readability */
+        @media not all and (-ms-high-contrast) {
+            .category-button:hover {
+                color: HighlightText !important;
+            }
+            .diagnostic-data-blob:hover {
+                color: rgba(0, 0, 0, 0.6) !important;
+            }
+        }
+    </style>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <!-- Primary view -->
+        <div class="container-content no-scroll">
+            <oobe-header params="title: $root.pageTitle"></oobe-header>
+
+            <!-- Diagnostic data rendering progress view -->
+            <div id="diagnostic-data-rendering-progress-view-container" data-bind="visible: $root.shouldShowDataRenderingProgress">
+                <oobe-light-progress params="progressText: $root.DIAGNOSTICS_PAGE_RENDERING_TEXT" class="app-content"></oobe-light-progress>
+            </div>
+            
+            <div id="diagnostic-report-view-container" class="scroll-view" data-bind="visible: $root.shouldShowDiagnosticData">
+                <!-- Diagnostic report view -->
+                <div class="diagnostic-report-view-container">
+                    <!-- If there is no provisioned resource data, show nothing -->
+                    <div data-bind="if: ($root.diagnosticDataTabs() && $root.diagnosticDataTabs().length != 0)">
+                        <table id="categories-table">
+                            <tbody data-bind="foreach: $root.diagnosticDataTabs()">
+                                <tr id="category-row">
+                                    <td class="category-button-cell">
+                                        <button class="category-button win-button alt-button" data-bind="click: $root.onShowDetailsButtonClick, attr: { 'aria-label': $data.ariaLabel() }" role="button">
+                                            <div class="category-button-contents">
+                                                <span id="category-status-icon" data-bind="css: {
+                                                    statusIcon: true,
+                                                    'icon-check': ($data.status == 5 || $data.status == 6 || $data.status == 7),
+                                                    'icon-error icon-error-position': ($data.status == 1 || $data.status == 2),
+                                                    'icon-inProgress' : (status == 4),
+                                                    'icon-warning icon-warning-position' : ($data.status == 3)
+                                                }"></span>
+                                                <span class="tab-name-cell" data-bind="text: $data.tabName"></span>
+                                                <span class="collapse-message" data-bind="text: $data.isVisible() ? $root.HIDE_DETAILS : $root.SHOW_DETAILS"></span>
+                                            </div>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr id="category-collapsable-data-row" data-bind="visible: $data.isVisible">
+                                    <td id="category-collapsable-data-cell">
+                                        <!-- DiagnosticEvent category view -->
+                                        <table id="diagnostic-event-subcategory-table" data-bind="if: ($data.dataBindSchemaId == $root.diagnosticEvent())">
+                                            <tbody data-bind="foreach: $data.categories" data-bind="if: ($data.categories && $data.categories.length != 0)">
+                                                <tr id="diagnostic-event-subcategory-row" data-bind="if: ($data.events && $data.events.length != 0)">
+                                                    <td class="diagnostic-event-subcategory-name-cell">
+                                                        <span class="subcategory-name-label diagnostic-event-subcategory-name-label" data-bind="text: $data.categoryName, attr: { 'aria-label': $data.ariaLabel() }"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr id="diagnostic-events-table-row" data-bind="if: ($data.events && $data.events.length != 0)">
+                                                    <td id="diagnostic-events-table-cell">
+                                                        <div data-bind="foreach: $data.events">
+                                                            <button class="diagnostic-data-button diagnostic-data-l2-indent category-button win-button alt-button" data-bind="click: $root.onShowDetailsButtonClick, css: { 'diagnostic-data-blob': $data.isVisible() }, attr: { 'aria-label': $data.ariaLabel() }" role="button">
+                                                                <table id="diagnostic-events-table">
+                                                                    <tbody>
+                                                                        <tr id="diagnostic-event-subcategory-button-row">
+                                                                            <td id="diagnostic-event-subcategory-button-cell">
+                                                                                <div id="diagnostic-data-button-contents">
+                                                                                    <span id="diagnostic-event-status-icon" data-bind="css: {
+                                                                                        'statusIcon icon-small': true,
+                                                                                        'icon-check': ($data.status == 5 || $data.status == 6 || $data.status == 7),
+                                                                                        'icon-error': ($data.status == 1 || $data.status == 2),
+                                                                                        'icon-inProgress' : (status == 4),
+                                                                                        'icon-warning icon-warning-position' : ($data.status == 3)
+                                                                                    }"></span>
+                                                                                    <span class="label-word-wrap" data-bind="text: $data.eventName"></span>
+                                                                                    <span class="collapse-chevron" data-bind="css: $data.isVisible() ? 'icon-chevron-up': 'icon-chevron-down'"></span>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr id="diagnostic-event-collapsable-row" data-bind="visible: $data.isVisible">
+                                                                            <td id="diagnostic-event-cell">
+                                                                                <table id="diagnostic-event-table" class="diagnostic-data-table diagnostic-data">
+                                                                                    <tr id="diagnostic-event-start-time-row">
+                                                                                        <td id="diagnostic-event-start-time-label" class="diagnostic-data-label-cell" data-bind="text: $root.START_TIME_HEADING"></td>
+                                                                                        <td id="diagnostic-event-start-time-value" data-bind="text: $data.startTime"></td>
+                                                                                    </tr>
+                                                                                    <tr id="diagnostic-event-finish-time-row">
+                                                                                        <td id="diagnostic-event-finish-time-label" class="diagnostic-data-label-cell" data-bind="text: $root.FINISH_TIME_HEADING"></td>
+                                                                                        <td id="diagnostic-event-finish-time-value" data-bind="text: $data.finishTime"></td>
+                                                                                    </tr>
+                                                                                    <tr id="diagnostic-event-details-row">
+                                                                                        <td colspan="2" id="diagnostic-event-details-value" data-bind="text: $data.details"></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <!-- StaticData category view -->
+                                        <table id="static-data-subcategory-table" data-bind="if: ($data.dataBindSchemaId == $root.staticData())">
+                                            <tbody data-bind="foreach: $data.categories" data-bind="if: ($data.categories && $data.categories.length != 0)">
+                                                <tr id="static-data-subcategory-row" data-bind="if: ($data.items && $data.items.length != 0)">
+                                                    <td id="static-data-table-cell">
+                                                        <button class="diagnostic-data-button diagnostic-data-l2-indent category-button win-button alt-button" data-bind="click: $root.onShowDetailsButtonClick, css: { 'diagnostic-data-blob': $data.isVisible() }, attr: { 'aria-label': $data.ariaLabel() }" role="menu">
+                                                            <table id="static-data-table">
+                                                                <tbody>
+                                                                    <tr id="static-data-subcategory-button-row">
+                                                                        <td class="static-data-subcategory-button-cell">
+                                                                            <span class="subcategory-name-label" data-bind="text: $data.categoryName"></span>
+                                                                            <span class="collapse-chevron" data-bind="css: $data.isVisible() ? 'icon-chevron-up': 'icon-chevron-down'"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="static-data-collapsable-row" data-bind="visible: $data.isVisible">
+                                                                        <td class="static-data-collapsable-row-cell">
+                                                                            <table id="static-data-expanded-table" class="diagnostic-data-table">
+                                                                                <tbody data-bind="foreach: $data.items">
+                                                                                    <tr id="static-data-subcategory-button-row" data-bind="if: $data.value">
+                                                                                        <td class="diagnostic-data-label-cell">
+                                                                                            <span data-bind="text: $data.propertyName"></span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <span class="diagnostic-data static-data-value" data-bind="text: $data.value"></span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <!-- ResourceEvent category view -->
+                                        <table id="resource-event-subcategory-table" class="resource-event-subcategory-table" data-bind="if: (($data.dataBindSchemaId == $root.resourceEvent()) && ($data.categories && $data.categories.length != 0))">
+                                            <tbody data-bind="foreach: $data.categories">
+                                                <tr id="resource-event-subcategory-row" data-bind="if: ($data.resources && $data.resources.length != 0)">
+                                                    <td class="resource-event-subcategory-name-cell">
+                                                        <span class="subcategory-name-label diagnostic-event-subcategory-name-label" data-bind="text: $data.categoryName, attr: { 'aria-label': $data.ariaLabel() }"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr id="resource-table-row" data-bind="if: ($data.resources && $data.resources.length != 0)">
+                                                    <td id="resource-table-cell">
+                                                        <table id="resource-table">
+                                                            <tbody data-bind="foreach: $data.resources">
+                                                                <tr id="resource-name-row">
+                                                                    <td class="resource-name-cell">
+                                                                        <div class="diagnostic-data-l3-indent">
+                                                                            <span class="diagnostic-data label-word-wrap" data-bind="text: $data.resourceName, attr: { 'aria-label': $data.ariaLabel() }"></span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="resource-events-row">
+                                                                    <td id="resource-events-table-cell">
+                                                                        <div data-bind="foreach: $data.events">
+                                                                            <button class="resource-event-button diagnostic-data-l3-indent category-button win-button alt-button" data-bind="click: $root.onShowDetailsButtonClick, css: { 'diagnostic-data-blob': $data.isVisible() }, attr: { 'aria-label': $data.ariaLabel() }" role="menu">
+                                                                                <table id="resource-events-table">
+                                                                                    <tbody>
+                                                                                        <tr id="resource-event-subcategory-button-row">
+                                                                                            <td id="resource-event-subcategory-button-cell">
+                                                                                                <div id="resource-data-button-contents">
+                                                                                                    <span id="resource-event-status-icon" data-bind="css: {
+                                                                                                        'statusIcon icon-small': true,
+                                                                                                        'icon-check': ($data.status == 5 || $data.status == 6 || $data.status == 7),
+                                                                                                        'icon-error': ($data.status == 1 || $data.status == 2),
+                                                                                                        'icon-inProgress' : (status == 4),
+                                                                                                        'icon-warning icon-warning-position' : ($data.status == 3)
+                                                                                                    }"></span>
+                                                                                                    <span class="label-word-wrap" data-bind="text: $data.eventName"></span>
+                                                                                                    <span class="collapse-chevron" data-bind="css: $data.isVisible() ? 'icon-chevron-up': 'icon-chevron-down'"></span>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr id="resource-event-collapsable-row" data-bind="visible: $data.isVisible">
+                                                                                            <td id="resource-event-cell">
+                                                                                                <table id="resource-event-table" class="diagnostic-data-table diagnostic-data">
+                                                                                                    <tr id="resource-event-start-time-row">
+                                                                                                        <td id="resource-event-start-time-label" class="diagnostic-data-label-cell" data-bind="text: $root.START_TIME_HEADING"></td>
+                                                                                                        <td id="resource-event-start-time-value" data-bind="text: $data.startTime"></td>
+                                                                                                    </tr>
+                                                                                                    <tr id="resource-event-finish-time-row">
+                                                                                                        <td id="resource-event-finish-time-label" class="diagnostic-data-label-cell" data-bind="text: $root.FINISH_TIME_HEADING"></td>
+                                                                                                        <td id="resource-event-finish-time-value" data-bind="text: $data.finishTime"></td>
+                                                                                                    </tr>
+                                                                                                    <tr id="resource-event-details-row">
+                                                                                                        <td colspan="2" id="resource-event-details-value" data-bind="text: $data.details"></td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Diagnostic report error view -->
+            <div id="diagnostic-report-error-view-container" data-bind="visible: $root.shouldShowError">
+                <p id="errorMessageSubtitle" class="error-lite body-sub-header" data-bind="html: $root.errorSubHeader"></p>
+
+                <div class="error-view-additional-information-blob">
+                    <h4 class="error-view-additional-information-header" data-bind="text: $root.ERROR_ADDITIONAL_INFO_HEADING"></h4>
+                    <p class="error-view-additional-information-details" data-bind="text: $root.errorCode"></p>
+                    <p class="error-view-additional-information-details" data-bind="text: $root.errorDescription"></p>
+                </div>
+            </div>
+
+            <!-- Export logs view -->
+            <div id="export-logs-view-container" data-bind="visible: $root.shouldShowLogsExportProgress">
+                <!-- Export logs progress view -->
+                <oobe-light-progress params="progressText: $root.DIAGNOSTICS_PAGE_LOGS_EXPORT_PROGRESS_TEXT" class="app-content" data-bind="visible: $root.shouldShowLogsExportSpinner"></oobe-light-progress>
+
+                <!-- Export logs success view -->
+                <div class="export-logs-success-view-blob body-sub-header" data-bind="visible: $root.logExportSucceeded">
+                    <p data-bind="text: $root.LOG_EXPORT_SUCCEEDED"></p>
+                </div>
+            </div>
+        </div>
+
+        <oobe-footer params="flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

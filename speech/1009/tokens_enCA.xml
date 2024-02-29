@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tokens>
+
+  <Category name="Voices" categoryBase="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore">
+    <Token name="MSTTS_V110_enCA_EvaM">
+      <String name="" value="Microsoft Eva Mobile - English (Canada)" />
+      <String name="LangDataPath" value="%windir%\Speech_OneCore\Engines\TTS\en-CA\MSTTSLocenCA.dat" />
+      <String name="LangUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\en-CA" />
+      <String name="VoicePath" value="%windir%\Speech_OneCore\Engines\TTS\en-CA\M4105Eva" />
+      <String name="VoiceUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\en-CA" />
+      <String name="1009" value="Microsoft Eva Mobile - English (Canada)" />
+      <String name="CLSID" value="{179F3D56-1B0B-42B2-A962-59B7EF59FE1B}" />
+      <Attribute name="Version" value="11.0" />
+      <Attribute name="Language" value="1009" />
+      <Attribute name="Gender" value="Female" />
+      <Attribute name="Age" value="Adult" />
+      <Attribute name="DataVersion" value="11.0.2015.0805" />
+      <Attribute name="SharedPronunciation" value="" />
+      <Attribute name="Name" value="Microsoft Eva Mobile(Canada)" />
+      <Attribute name="Vendor" value="Microsoft" />
+      <Attribute name="PersonalAssistant" value="1" />
+    </Token>
+  </Category>
+ 
+</Tokens>

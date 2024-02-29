@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html id="_rdxHtmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+
+    <!-- WinJS references -->
+    <script src="../Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- Page references -->
+    <script src="../js/core.js"></script>
+    <script src="../js/uihelpers.js"></script>
+    <script src="../js/bridge.js"></script>
+    <script src="../js/events.js"></script>
+    <script src="retailDemoMsaInclusive.js"></script>
+
+    <!-- requirejs references -->
+    <!-- These are required for some CXH error handling even though this page doesn't obviously need require -->
+    <script src="../core/js/require-helpers.js"></script>
+    <script src="../core/js/requirePath-config-core.js"></script>
+    <script src="../lib/require.js"></script>
+
+    <style>
+        #signInLink {
+            max-width: none;
+        }
+    </style>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header>
+                <div class="content-header">
+                    <div class="body-header">
+                        <h1 id="msaTitle"></h1>
+                    </div>
+                    <div class="body-sub-header" id="msaText"></div>
+                </div>
+            </oobe-header>
+        </div>
+        <oobe-footer>
+            <div class="button-group space-between">
+                <div class="align-self-start">
+                    <a href="#" class="win-button alt-button" id="signInLink"></a>
+                </div>
+                <div class="align-self-end">
+                    <button id="finishButton" class="win-button button_primary"></button>
+                </div>
+            </div>
+        </oobe-footer>
+    </div>
+</body>
+</html>

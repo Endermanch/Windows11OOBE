@@ -1,0 +1,61 @@
+/*! Copyright (C) Microsoft Corporation. All rights reserved. */
+body {
+    overflow-x: auto;
+    max-width: 100%;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    color: #303030;
+    padding: 16px;
+    background: rgba(255,255,255,0.6);
+    margin: 0;
+    font-family: "Segoe UI Variable", "Segoe UI", "Selawik", Tahoma, Verdana, Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body:focus::after {
+    position: fixed;
+    left: 4px;
+    top: 4px;
+    height: calc(100% - 8px);
+    content: " ";
+    width: 2px;
+    border-radius: 1px;
+    background: #0067C0;
+}
+
+/* 19px on the scrolling side to prevent overlap with scrollbar
+    16px for scrollbars and 3px for outline margin */
+html[dir=ltr] body {
+    padding-right: 19px;
+}
+
+html[dir=rtl] body {
+    padding-left: 19px;
+}
+
+/* Override (reduce) leading margins on indentations and subsections */
+html[dir=ltr] body dir {
+    padding-left: 10px;
+}
+
+html[dir=rtl] body dir {
+    padding-right: 10px;
+}
+
+body:focus {
+    outline-style: none;
+    background: #FFF;
+}
+
+@media (-ms-high-contrast) {
+    body:focus {
+        background: transparent;
+        outline: 2px solid Highlight;
+        outline: none;
+    }
+}
+
+p {
+    font-size: 0.87rem;
+    line-height: 1.25rem;
+    max-width: 100%;
+}

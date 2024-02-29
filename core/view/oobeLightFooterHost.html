@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html class="win-hoverable" id="_htmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- Hook up Intellisense references for common libs, override minified WinJS Intellisense. Not present in razzle builds but that's okay, it doesn't do anything. -->
+    <script src="/js/_references.js"></script>
+
+    <!-- CloudExperienceHost references -->
+    <script src="/js/appObjectFactory.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script src="/lib/require.js"></script>
+
+    <!-- Page references -->
+    <link href="/css/default.css" rel="stylesheet" />
+    <script src="../js/oobeLightFooterHost.js"></script>
+</head>
+<body>
+    <div class="helpertools">
+        <oobe-light-footer></oobe-light-footer>
+    </div>
+</body>
+</html>

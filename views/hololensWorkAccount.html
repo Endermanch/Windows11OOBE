@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html id="_htmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>OOBE</title>
+
+    <!-- WinJS references -->
+    <script src="../Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="../Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- bridge references -->
+    <script src="../js/bridge.js"></script>
+    <script src="../js/events.js"></script>
+
+    <!-- Page references -->
+    <script src="../js/uiHelpers.js"></script>
+    <script src="../js/hololensWorkAccountPage.js"></script>
+    <script src="../js/core.js"></script>
+</head>
+<body>
+    <div class="control-app">
+        <div class="app-content">
+            <form action="#" class="control-page">
+                <div class="page-body">
+                    <header class="body-header" aria-labelledby="Title">
+                        <h2 role="presentation">
+                            <span id="Title"></span>
+                        </h2>
+                    </header>
+
+                    <div class="body-container">
+                        <div class="container-content">
+                            <fieldset role="presentation">
+                                <div class="template-input" id="userName_input" style="display:none">
+                                    <input type="text" id="userName" class="win-textbox" autofocus /><br />
+                                    <div class="input-errorDialog" style="display:none">
+                                        <div class="errorDialog-dialogRoot tooltipType_error" id="userName_errorDialog" aria-live="assertive" role="alert"></div>
+                                    </div>
+                                </div>
+                                <div class="template-input" id="password_input">
+                                    <input type="password" id="password" class="win-textbox" /> <br />
+                                    <div class="input-errorDialog" style="display:none">
+                                        <div class="errorDialog-dialogRoot tooltipType_error" id="password_errorDialog" aria-live="assertive" role="alert"></div>
+                                    </div>
+                                </div>
+                                <p tabindex="-1" aria-labelledby="LeadText">
+                                    <span id="LeadText"></span>
+                                </p>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-footer">
+                    <div class="footer-icons">
+                        <span id="progressContainer">
+                            <progress id="progressRing" class="win-ring win-small" style="display:none"/>
+                        </span>
+                    </div>
+
+                    <div class="footer-buttons template-buttonGroup">
+                        <button id="BackButton" type="button" class="win-button control-button"></button>
+                        <button id="NextButton" type="submit" class="win-button control-button button_primary"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

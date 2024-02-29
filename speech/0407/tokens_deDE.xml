@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tokens>
+
+  <Category name="Voices" categoryBase="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore">
+    <Token name="MSTTS_V110_deDE_KatjaCortanaM">
+      <String name="" value="Microsoft Katja Cortana Mobile - German (Germany)" />
+      <String name="LangDataPath" value="%windir%\Speech_OneCore\Engines\TTS\de-DE\MSTTSLocdeDE.dat" />
+      <String name="LangUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\de-DE" />
+      <String name="VoicePath" value="%windir%\Speech_OneCore\Engines\TTS\de-DE\M1031KatjaV2" />
+      <String name="VoiceUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\de-DE" />
+      <String name="407" value="Microsoft Katja Cortana Mobile - German (Germany)" />
+      <String name="CLSID" value="{179F3D56-1B0B-42B2-A962-59B7EF59FE1B}" />
+      <Attribute name="Version" value="11.1" />
+      <Attribute name="Language" value="407" />
+      <Attribute name="Gender" value="Female" />
+      <Attribute name="Age" value="Adult" />
+      <Attribute name="DataVersion" value="11.1.2014.1222" />
+      <Attribute name="SharedPronunciation" value="" />
+      <Attribute name="Name" value="Microsoft Katja Cortana Mobile" />
+      <Attribute name="Vendor" value="Microsoft" />
+      <Attribute name="PersonalAssistant" value="1" />
+    </Token>
+  </Category>
+  
+</Tokens>

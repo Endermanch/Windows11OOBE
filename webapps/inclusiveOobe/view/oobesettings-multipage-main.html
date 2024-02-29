@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/inclusive-listview.css" />
+        <link rel="stylesheet" href="../css/inclusive-common.css" />
+        <!-- WinJS references -->
+        <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+        <!-- requirejs references -->
+        <script src="/core/js/require-helpers.js"></script>
+        <script src="/core/js/requirePath-config-core.js"></script>
+        <script data-main="/webapps/inclusiveOobe/js/oobesettings-multipage-page.js" src="/lib/require.js"></script>
+
+        <style>
+            .scroll-view {
+                min-width: unset !important; /* To keep the scroll view from clipping */
+            }
+        </style>
+    </head>
+    <body class="webapp-inner">
+        <script type="text/html" id="panel-template">
+            <div class="oobe-panel" data-bind="attr: { 'data-panel-index': KoHelpers.getElementIndex($element.parentElement) }, panelIndexVisible: $root.currentPanelIndex">
+                <div class="container-content">
+                    <oobe-header params="title: title, subtitle: subtitle"></oobe-header>
+                    <div class="content-box">
+                        <oobe-listview autofocus params="items: items, selectedItem: selectedItem, selectionFollowsFocus: false, binaryChoice: true, alwaysShowScrollbar: true">
+                            <div class="list-icon" role="presentation" aria-hidden="true">
+                                <i class="icon" role="presentation" data-bind="html: icon"></i>
+                            </div>
+                            <div class="list-text">
+                                <div class="secondary-text" data-bind="text: valueText"></div>
+                                <div class="" data-bind="text: descriptionText"></div>
+                            </div>
+                        </oobe-listview>
+                    </div>
+                </div>
+                <oobe-footer params="flexEndButtons: footerButtons"></oobe-footer>
+            </div>
+        </script>
+        <div class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction">
+            <!-- ko if: settingVisible -->
+                <!-- ko foreach: settingsPageContent -->
+                <div data-bind="template: { name: 'panel-template', data: { 
+                        title: title,
+                        subtitle: $root.resources.MultiSettingsSubtitle,
+                        items: items, selectedItem: selectedItem,
+                        footerButtons: $root.pageFooterButtons
+                        }}"></div>
+                <!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: learnMoreVisible -->
+            <div class="container-content">
+                <oobe-header params="title: resourceStrings.LearnMoreTitle"></oobe-header>
+                <div class="iframe-row med-iframe">
+                    <iframe class="eula-iframe" x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" id="learnMoreIFrame" data-bind="iframeContent: { content:$root.learnMoreContent, dir:document.documentElement.dir, focusBody: true }, attr: { 'aria-label': resources.LearnMoreTitle }"></iframe>
+                </div>
+            </div>
+            <oobe-footer params="flexEndButtons: learnMoreButtons"></oobe-footer>
+            <!-- /ko -->
+            </div>
+    </body>
+</html>

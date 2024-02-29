@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html id="_htmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="/Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/hololensDiagnostics/js/hololensDiagnostics-page.js" src="/lib/require.js"></script>
+</head>
+<body>
+    <div class="control-app" id="PageLogCollector">
+        <div class="app-content">
+            <form action="#" class="control-page">
+                <div class="page-body">
+                    <!-- The title to be displayed within the page.  This will either display the title
+                         upon load, the success title or the error title.  Modification of this is controlled
+                         by the corresponding JS, and what action the user has taken. -->
+                    <header class="body-header" aria-labelledBy="Title">
+                        <h2 role="presentation">
+                            <span id="Title"></span>
+                        </h2>
+                    </header>
+
+                    <div class="body-container">
+                        <!--
+                            The body contains text that either describes the error handler text,
+                            the procedure offered for troubleshooting, or the outcome of log transfer.
+                         -->
+                        <div class="container-content">
+                            <div id="Instructions" style="display:none">
+                                <p tabindex="-1" class="text-body textType_maxLinesTwo" aria-labelledby="Instruction0">
+                                    <span id="Instruction0"></span>
+                                </p>
+                                <p tabindex="-1" class="text-body textType_maxLinesTwo" aria-labelledby="Instruction1">
+                                    <span id="Instruction1"></span>
+                                </p>
+                                <p tabindex="-1" class="text-body textType_maxLinesTwo" aria-labelledby="Instruction2">
+                                    <span id="Instruction2"></span>
+                                </p>
+                                <p tabindex="-1" class="text-body textType_maxLinesTwo" aria-labelledby="Instruction3">
+                                    <span id="Instruction3"></span>
+                                </p>
+                                <p tabindex="-1" class="text-body textType_maxLinesTwo" aria-labelledby="Instruction4">
+                                    <span id="Instruction4"></span>
+                                </p>
+                            </div>
+                            <p tabindex="-1" class="content-lead" aria-labelledby="Body" id="PageBody">
+                                <span id="Body"></span>
+                            </p>
+                        </div>
+                        <div class="container-footer">
+                            <div class="footer-content">
+                                <ul class="control-actionLinks" role="presentation">
+                                    <li><a href="#" id="TroubleshootingLink"></a></li>
+                                    <li><a href="#" id="PrivacyStatementLink"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-footer">
+                    <div class="footer-buttons template-buttonGroup">
+                        <!-- 
+                            The Retry and Cancel buttons are displayed on the landing page and behave 
+                            just like the retry and cancel buttons on the error handler page. 
+                            The Back and Next buttons are displayed on the troubleshooting page and 
+                            allow navigation back to the error handler or begin log transfer.
+                            If transfer succeeds, the Continue button is displayed.
+                         -->
+                        <button id="RetryButton" class="win-button control-button"></button>
+                        <button id="CancelButton" class="win-button control-button button_primary"></button>
+                        <button id="ContinueButton" class="win-button control-button button_primary"></button>
+                        <button id="BackButton" class="win-button control-button"></button>
+                        <button id="NextButton" class="win-button control-button button_primary"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- This page contains the spinner to be displayed while logs are being copied. -->
+    <div class="control-app" id="PageSpinner">
+        <div class="app-content">
+            <div class="control-page page_centered">
+                <div class="page-body">
+                    <div class="body-container">
+                        <div class="container-content">
+                            <div class="control-progress">
+                                <progress class="win-ring win-large"></progress>
+                                <h4 id="ProgressDescription" aria-live="assertive" aria-role="alert"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flyout for privacy statement -->
+    <div id="PrivacyFlyout" class="win-overlay win-disposable win-flyout" data-win-control="WinJS.UI.Flyout" aria-label="{Flyout control}">
+        <div>
+            <h4 id="PrivacyHeadline" tabindex="-1" aria-labelledby="PrivacyHeadline"></h4>
+            <p id="PrivacyBody" tabindex="-1" aria-labelledby="PrivacyBody"></p>
+        </div>
+    </div>
+</body>
+</html>

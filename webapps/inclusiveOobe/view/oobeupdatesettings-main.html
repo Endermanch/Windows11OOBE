@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+    <!-- ui.js is needed for toggle switches control -->
+    <script src="/Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobeupdatesettings-page.js" src="/lib/require.js"></script>
+
+    <!-- Override just the oobe-toggle object's off state to prevent the header text from changing colors when disabled. -->
+    <!-- ko ifnot: $root.isLiteWhitePersonality -->
+    <style>
+        .toggle-content > div > div oobe-toggle .win-toggleswitch.win-toggleswitch-off .win-toggleswitch-header {
+            color: #FFFFFF !important;
+        }
+
+        .update-settings-image {
+            max-height: 250px;
+            margin-bottom: 40px;
+        }
+
+        html[dir="ltr"] .update-settings-image {
+            margin-left: 200px;
+            margin-right: 40px;
+            float: left;
+        }
+
+        html[dir="rtl"] .update-settings-image {
+            margin-right: 200px;
+            margin-left: 40px;
+            float: right;
+        }
+
+        @media (-ms-high-contrast) {
+            .win-toggleswitch.win-toggleswitch-off .win-toggleswitch-header {
+                color: ButtonText !important;
+            }
+        }
+    </style>
+    <!-- /ko -->
+</head>
+<body class="webapp-inner">
+    <script type="text/html" id="custom-content-template">
+        <!-- ko foreach: toggleContent -->
+        <div class="toggle-container" style="width:100%;">
+            <Strong data-bind="text: $data.name"></Strong>
+            <br>
+            <oobe-toggle params="contentHeader: $data.contentHeader, titleText: $data.titleText, labelOnText: $data.labelOnText, labelOffText: $data.labelOffText,
+                             descriptionOn: $data.descriptionOn, descriptionOff: $data.descriptionOff, checked: $data.checkedValue,
+                             summaryFormatString: $root.resources['SettingNarratorDescriptionFormatString']"></oobe-toggle>
+        </div>
+        <!-- /ko -->
+        <!-- ko ifnot: $root.isLiteWhitePersonality -->
+        <p class="toggle-header" data-bind="html: $root.footerDescriptionText" style="margin-top:50px;width:100%;"></p>
+        <!-- /ko -->
+    </script>
+
+    <div class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction">
+        <div class="container-content">
+            <oobe-header params="title: title, subtitle: subHeaderText"></oobe-header>
+            <!-- ko if: customizeVisible -->
+            <div>
+                <!-- ko ifnot: isLiteWhitePersonality -->
+                <img data-bind="attr: { src:updateSettingsImage }" class="update-settings-image" role="presentation" />
+                <!-- /ko -->
+                <div class="toggle-content" style="margin-top:30px;">
+                    <div>
+                        <div data-bind="template: { name: 'custom-content-template', foreach: contentSettings}"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: learnMoreVisible -->
+            <div class="container-content" data-bind="attr: { autofocus: true, tabindex: 0, 'aria-label': resources.LearnMoreTitle }">
+                <div style="justify-content:left">
+                    <p><b data-bind="html: $root.resources['LearnMoreHeader1']"></b></p>
+                    <p data-bind="html: $root.resources['LearnMoreBody1']"></p>
+                    <p><b data-bind="html: $root.resources['LearnMoreHeader2']"></b></p>
+                    <p data-bind="html: $root.resources['LearnMoreBody2']"></p>
+                    <p><b data-bind="html: $root.resources['LearnMoreHeader3']"></b></p>
+                    <p data-bind="html: $root.resources['LearnMoreBody3']"></p>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+        <oobe-footer params="flexEndButtons: flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

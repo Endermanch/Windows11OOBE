@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/personalDataExport-page.js" src="/lib/require.js"></script>
+
+    <style>
+        .container-content.pdeContainer-content {
+            overflow-x: auto;
+            justify-content: space-between;
+            min-height: 180px; /* To keep the page content from being squished out of view by the header and footer. Same value as $minHeightForContent */
+        }
+
+        .pdeContainer-content > div {
+            width: 100%;
+        }
+
+        .link.footerlink {
+            padding: unset;
+        }
+
+    </style>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <!-- ko if: pageVisible -->
+        <div class="container-content">
+            <oobe-header params="title: PageTitle, subtitle: PageSubtitle"></oobe-header>
+            <div class="container-content pdeContainer-content">
+                <div>
+                    <p data-bind="text: Paragraph1"></p>
+                    <p data-bind="text: Paragraph2"></p>
+                </div>
+                <div>
+                    <p data-bind="text: Paragraph3"></p>
+                    <a href="#" class="link footerlink" data-bind="text: $root.PrivacyLinkDisplayText, click: $root.onPrivacyLinkClick"></a>
+                </div>
+            </div>
+        </div>
+        <oobe-footer params="flexEndButtons: $root.mainPageFooterButtons"></oobe-footer>
+        <!-- /ko -->
+        <!-- ko if: privacyVisible -->
+        <div class="container-content">
+            <oobe-header params="title: resources.PrivacyTitle"></oobe-header>
+            <div class="iframe-row med-iframe">
+                <iframe  x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" id="privacyIFrame" autofocus="true" data-bind="iframeContent: { dir:document.documentElement.dir, focusBody: true }, attr: { 'aria-label': resources.PrivacyTitle }"></iframe>
+            </div>
+        </div>
+        <oobe-footer params="flexEndButtons: $root.privacyPageFooterButtons"></oobe-footer>
+        <!-- /ko -->
+        <!-- ko if: learnMoreVisible -->
+        <div class="container-content">
+            <oobe-header params="title: resources.LearnMoreLinkText"></oobe-header>
+            <div class="iframe-row med-iframe">
+                <!-- The content of this iFrame is set by onLearnMoreButtonClick to a URL or NavigationError text if no internet available.  -->
+                <iframe  x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" id="learnMoreIFrame" autofocus="true" data-bind="iframeContent: {  dir:document.documentElement.dir, focusBody: true }, attr: { 'aria-label': resources.LearnMoreLinkText }"></iframe>
+            </div>
+        </div>
+        <oobe-footer params="flexEndButtons: $root.learnMorePageFooterButtons"></oobe-footer>
+        <!-- /ko -->
+    </div>
+</body>
+</html>

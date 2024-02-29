@@ -1,0 +1,55 @@
+/*! Copyright (C) Microsoft Corporation. All rights reserved. */
+/* Version 1.1.5 */
+html {
+  font-size: 100%; }
+
+body {
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  padding-bottom: 0.0141875rem;
+  padding-top: 0.0141875rem;
+  font-weight: 400;
+  font-family: "Segoe UI", "Selawik", Tahoma, Verdana, Arial, sans-serif; }
+
+p {
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  padding-bottom: 0.0141875rem;
+  padding-top: 0.0141875rem;
+  font-weight: 400; }
+
+
+:link,
+:visited {
+  color: #a6d8ff; }
+  
+  :link:hover,
+  :visited:hover {
+    color: rgba(166, 216, 255, 0.8); }
+  
+  :link:active,
+  :visited:active {
+    color: rgba(166, 216, 255, 0.6); }
+
+p {
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  padding-bottom: 0.0141875rem;
+  padding-top: 0.0141875rem;
+  font-weight: 400;
+  max-width: 100%; }
+
+body {
+  background: #004275;
+  overflow: auto;
+  max-width: 100%;
+  margin: 0;
+  -ms-overflow-style: scrollbar;
+  color: #FFF;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 12px; }
+  body b * {
+    font-weight: bold; }
+  body dir {
+    padding-left: 20px; }

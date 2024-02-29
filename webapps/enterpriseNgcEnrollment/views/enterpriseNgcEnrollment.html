@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html id="_htmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <!-- WinJS references -->
+    <script src="../../../Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="../../../Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- bridge references -->
+    <script src="../../../js/bridge.js"></script>
+    <script src="../../../js/events.js"></script>
+
+    <!-- Page references -->
+    <script src="../../../js/uiHelpers.js"></script>
+    <script src="../../../js/hello.js"></script>
+    <script src="../../../js/core.js"></script>
+    <script src="../js/enterpriseNgcEnrollmentPage.js"></script>
+</head>
+<body>
+    <div class="control-app" id="PageEnrollment">
+        <div class="app-content">
+            <form action="#" class="control-page">
+                <div class="page-body">
+                    <!-- The title to be displayed within the page.  This will either display the title
+                         upon load, the success title or the error title.  Modification of this is controlled
+                         by the corresponding JS, and what action the user has taken. -->
+                    <div class="body-header" aria-labelledby="Title">
+                        <h1 id="Title"></h1>
+                    </div>
+
+                    <div class="body-container">
+                        <div id="ContainerDiv" class="container-content">
+                            <!-- The body contains text that either describes the purpose of enrolling for an NGC,
+                                 or the outcome of the enrollment be it success or error. -->
+                            <div tabindex="-1" class="content-lead" aria-labelledby="Body" id="PageBody">
+                                <span id="Body" class="body-sub-header"></span><br />
+                                <a href="#" id="HelpLink" class="link"></a>
+                            </div>
+
+                            <!-- This scalable vector graphic depicts a padlock.  This is only displayed to the user
+                                 on the landing page.  It will be hidden during enrollment and when showing the outcome
+                                 of the enrollment. -->
+                            <svg focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" style="height: 25vh; min-height:200px; width: 100%" enable-background="new 0 0 224.4 256" viewBox="0 0 224.4 256" x="0px" y="0px" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:space="preserve" version="1.1" id="PagePadlock">
+                                <title aria-labelledby="PadlockTitle" id="PadlockTitle"></title>
+                                <g role="presentation">
+                                    <path role="presentation" fill="#003662" d="M 115.3 0 c -2.8 0 -2.8 0 -2.8 0 C 84 0 62.6 22.8 62.6 49.8 c 0 65.4 0 65.4 0 65.4 c 17.1 0 17.1 0 17.1 0 c 0 -65.4 0 -65.4 0 -65.4 c 0 -17.1 14.2 -32.7 32.8 -32.7 c 2.8 0 2.8 0 2.8 0 c 18.5 0 32.8 15.6 32.8 32.7 c 0 4.3 0 14.2 0 14.2 c 0 14.2 0 51.2 0 51.2 c 17.1 0 17.1 0 17.1 0 c 0 -28.4 0 -65.4 0 -65.4 C 165.2 22.8 142.4 0 115.3 0 Z" />
+                                    <polyline role="presentation" fill="#003662" points="132.4,214.4 92.5,214.4 92.5,181.7 132.4,181.7 132.4,214.4" />
+                                    <rect role="presentation" fill="#004275" x="68.3" y="207.3" width="89.7" height="7.1" />
+                                    <polyline role="presentation" fill="#87aec7" points="27,80.7 27,191.6 197.9,191.6 197.9,80.7 27,80.7" />
+                                    <polyline role="presentation" fill="#b9e8f9" points="186.5,181.7 41.2,181.7 41.2,90.7 186.5,90.7 186.5,181.7" />
+                                    <path role="presentation" fill="#002642" d="M 125.3 129.1 c 0 7.1 -5.7 12.8 -12.8 12.8 c -7.1 0 -12.8 -5.7 -12.8 -12.8 c 0 -7.1 5.7 -12.8 12.8 -12.8 C 119.6 116.3 125.3 121.9 125.3 129.1 Z" />
+                                    <polygon role="presentation" fill="#002642" points="122.4,161.8 102.5,161.8 106.8,131.9 118.2,131.9" />
+                                    <polyline role="presentation" fill="#ffffff" points="27,151.9 27,192 92.5,192 92.5,191.6 27,191.6 27,151.9 27,151.9" />
+                                    <polyline role="presentation" fill="#1a4a72" points="100.8,191.6 92.5,191.6 92.5,192 101.4,192 100.8,191.6" />
+                                    <polyline role="presentation" fill="#93b6cd" points="27,151.9 27,191.6 92.5,191.6 100.8,191.6 82.3,181.7 41.2,181.7 41.2,159.6 27,151.9" />
+                                    <polyline role="presentation" fill="#c0eafa" points="41.2,159.6 41.2,181.7 82.3,181.7 41.2,159.6" />
+                                    <polygon role="presentation" fill="#87aec7" points="224.4,250.3 0,250.3 17.9,226.8 205.8,226.8" />
+                                    <rect role="presentation" fill="#004275" x="0" y="250.3" width="224.4" height="5.7" />
+                                    <polygon role="presentation" fill="#005a9e" points="157.6,231.6 24,231.6 21.5,235.1 159.2,235.1" />
+                                    <polygon role="presentation" fill="#005a9e" points="14,245.7 163.8,245.7 162.1,241.9 16.6,241.9" />
+                                    <polygon role="presentation" fill="#005a9e" points="160,237 20.1,237 18,240 161.4,240" />
+                                    <polygon role="presentation" fill="#005a9e" points="199.5,231.6 163,231.6 165,235.1 202.1,235.1" />
+                                    <polygon role="presentation" fill="#005a9e" points="170.8,245.7 209.6,245.7 206.9,241.9 168.7,241.9" />
+                                    <polygon role="presentation" fill="#005a9e" points="166,237 167.7,240 205.5,240 203.4,237" />
+                                </g>
+                            </svg>
+
+                            <!-- This footer will only be used when an error has occurred.  It contains error
+                                 information and the ability to start the enrollment process again. -->
+                            <div class="container-footer" id="PageError">
+                                <div class="footer-content">
+                                    <ul class="control-actionLinks list-none-style-type" role="presentation">
+                                        <li><span id="SpecialErrorInfo"></span></li>
+                                        <li>
+                                            <span id="ErrorDescription"></span><br />
+                                            <span id="ErrorCode"></span> <span id="ErrorCodeText" class="template-tooltip tooltipType_error"></span><br />
+                                            <span id="CorrelationID"></span> <span id="CorrelationIDText" class="template-tooltip tooltipType_error"></span><br />
+                                            <span id="Timestamp"></span> <span id="TimestampText" class="template-tooltip tooltipType_error"></span>
+                                        </li>
+                                        <li>
+                                            <a role="presentation" id="TryAgainButton" href="#" class="link"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-footer button-group">
+                    <div class="footer-icons">
+                        <button id="easeOfAccess" type="button" class="icon icon-win-easeOfAccess"></button>
+                        <button id="inputSwitcher" type="button" class="icon icon-win-keyboardStandard"></button>
+                    </div>
+                    <div class="footer-buttons template-buttonGroup align-self-end">
+                        <!-- The SetUpPin button will be displayed on the landing page.  During enrollment no button will
+                             be displayed.  If the enrollment is successful, the OK button will be displayed.  If the 
+                             enrollment failed, the Cancel button will be displayed. -->
+                        <button id="SetUpPinButton" autofocus type="button" class="win-button control-button button_primary win-button-last-child"></button>
+                        <button id="OkButton" autofocus type="submit" class="win-button control-button button_primary win-button-last-child"></button>
+                        <button id="CancelButton" autofocus type="submit" class="win-button control-button button_primary"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- This page contains the spinner to be displayed during enrollment. -->
+    <div class="control-app" id="PageSpinner">
+        <div class="app-content">
+            <div class="control-page page_centered">
+                <div class="page-body">
+                    <div class="body-container">
+                        <div class="container-content">
+                            <div class="control-progress">
+                                <progress class="win-ring win-large"></progress>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flyouts -->
+    <div id="HelpFlyout" data-win-control="WinJS.UI.Flyout" aria-label="{Flyout control}">
+        <div>
+            <h4 id="HelpHeadline" tabindex="-1" aria-labelledby="HelpHeadline"></h4>
+            <p id="HelpBody" tabindex="-1" aria-labelledby="HelpBody"></p>
+        </div>
+    </div>
+</body>
+</html>

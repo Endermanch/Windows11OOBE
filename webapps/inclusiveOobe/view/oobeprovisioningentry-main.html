@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobeprovisioningentry-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: title, subtitle: subHeaderText"></oobe-header>
+            <div class="content-box" data-bind="visible: !processingFlag()">
+                <oobe-listview params="items: packageItems, selectedItem: selectedPackage">
+                    <div class="listItemHeader" data-bind="text: $data"></div>
+                </oobe-listview>
+            </div>
+            <div class="control-progress" data-bind="visible: processingFlag">
+                <progress class="win-ring win-large withText"></progress>
+                <h4 data-bind="text: provisioningText" aria-live="assertive" aria-role="alert"></h4>
+                <h4 class="secondary-text" data-bind="text: removableMediaStatusText" aria-live="assertive" aria-role="alert"></h4>
+            </div>
+        </div>
+        <oobe-footer params="flexEndButtons: flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

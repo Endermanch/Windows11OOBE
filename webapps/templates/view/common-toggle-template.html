@@ -1,0 +1,5 @@
+﻿<!-- "The WinJS ToggleSwitch sets aria-labelledby to the right element, but it specifies aria-hidden which prevents Narrator from using it. 
+    Removing aria-hidden from that causes it to be read twice, so we just stamp it on attr:'aria-label' here as a workaround. -->
+<div aria-live="polite" aria-relevant="text" aria-atomic="true" 
+     data-bind="winToggleSwitch:{contentHeader: contentHeader, title: titleText, labelOff: labelOffText, labelOn: labelOnText, checked : checkedValue}, 
+                attr: { 'aria-label': currentAccDescription }"></div>

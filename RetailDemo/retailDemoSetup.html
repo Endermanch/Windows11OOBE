@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html id="_htmlRoot">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>RDX OOBE</title>
+
+    <!-- WinJS references -->
+    <script src="../Microsoft.WinJS-reduced/js/base.js"></script>
+    <script src="../Microsoft.WinJS-reduced/js/ui.js"></script>
+
+    <!-- Page references -->
+    <script src="../js/core.js"></script>
+    <script src="../js/uihelpers.js"></script>
+    <script src="../js/bridge.js"></script>
+    <script src="../js/events.js"></script>
+    <script src="../js/environment.js"></script>
+    <script src="retailDemoShared.js"></script>
+    <script src="retailDemoSetup.js"></script>
+</head>
+<body>
+    <div class="control-app">
+        <div class="app-content">
+            <div class="control-page">
+                <div class="page-body">
+                    <header class="body-header" aria-labelledby="rdamTitle">
+                        <h2 id="rdamTitle" role="presentation"></h2>
+                    </header>
+
+                    <div class="body-container">
+                        <div class="container-content">
+                            <p tabindex="-1" id="rdamText" class="content-lead" aria-labelledby="rdamText"></p>
+
+                            <fieldset aria-labelledby="racLegend">
+                                <legend id="racLegend"></legend>
+
+                                <table cellpadding="0" cellspacing="0" role="presentation">
+                                    <tr role="presentation">
+                                        <td role="presentation">
+                                            <div class="template-input">
+                                                <input id="racInput" type="text" class="win-textbox" />
+                                                <div id="racError" class="input-errorDialog" role="alert" aria-live="assertive" style="display:none"/>
+                                            </div>
+                                        </td>
+                                        <td role="presentation">
+                                            <div id="progressContainer" style="margin-left: 8px;" hidden="hidden"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br />
+                            </fieldset>
+
+                            <fieldset aria-labelledby="skuLegend">
+                                <legend id="skuLegend"></legend>
+
+                                <div class="template-input">
+                                    <input id="skuInput" type="text" class="win-textbox" disabled/>
+                                </div>
+                                <br />
+                            </fieldset>
+
+                            <fieldset aria-labelledby="storeIdLegend">
+                                <legend id="storeIdLegend"></legend>
+                                    <div class="template-input">
+                                        <input id="storeIdInput" type="text" class="win-textbox" disabled/>
+                                    </div>
+                                <br />
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-footer">
+                    <div class="footer-icons">
+                        <button id="easeOfAccess" type="button" class="icon icon-win-easeOfAccess"></button>
+                        <button id="inputSwitcher" type="button" class="icon icon-win-keyboardStandard"></button>
+                    </div>
+                    <div class="footer-buttons template-buttonGroup">
+                        <button id="extraConfigButton" class="win-button control-button" style="visibility:hidden;"></button>
+                        <button id="nextButton" class="win-button control-button button_primary"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

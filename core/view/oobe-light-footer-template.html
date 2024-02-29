@@ -1,0 +1,20 @@
+<div class="page-footer">
+    <div class="footer-icons space-between">
+        <!-- With this to support flip for RTL language -->
+        <div class="align-self-start" align="left"></div>
+        <div class="align-self-end" align="right">
+            <button class="c-icon f-bottomBar c-glyph icon-win-keyboardStandard"
+                    data-bind="visible: showInputSwitchButton,
+                    attr: {'aria-label': inputSwitchAccName, 'title': inputSwitchAccName},
+                    click: onInputSwitch"></button>
+            <button class="c-icon f-bottomBar c-glyph icon-win-easeOfAccess"
+                    data-bind="visible: showEOAButton,
+                        attr: {'aria-label': easeOfAccessAccName, 'title': easeOfAccessAccName},
+                        click: onEOAButton"></button>
+            <button class="c-icon f-bottomBar c-glyph icon-volume"
+                    data-bind="visible: showVolumeControlButton,
+                    attr: {'aria-label': volumeControlAccName, 'title': volumeControlAccName},
+                    click: onVolumeControl"></button>
+        </div>
+    </div>
+</div>

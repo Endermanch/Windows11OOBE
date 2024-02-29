@@ -1,0 +1,13 @@
+﻿<div class="scroll-view" role="group">
+    <div class="list" role="listbox" tabIndex="0" aria-multiselectable="false" aria-required="true" data-bind="event: { focus: onListFocus, focusin: onListFocusIn, focusout: onListFocusOut }, attr: { 'aria-label': listAccessibleName }">
+        <!-- ko foreach: items -->
+        <div class="list-item md" tabIndex="-1" role="option" data-bind="click: $parent.selectedItem,
+             event: { keyup: $parent.onItemKeyUp, keydown: $parent.onItemKeyDown, focus: $parent.selectionFollowsFocus ? $parent.selectedItem : null },
+             attr: { 'aria-selected': $parent.selectedItem() == $data },
+             css: { selected: $parent.selectedItem() == $data }">
+            <!-- ko template: { nodes: $componentTemplateNodes, data: $data } -->
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+    </div>
+</div>

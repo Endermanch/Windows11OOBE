@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/inclusive-listview.css" />
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobekeyboard-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner" data-bind="oobeHotKeys: optinHotKey">
+    <script type="text/html" id="panel-template">
+        <div class="oobe-panel" data-bind="attr: { 'data-panel-index': KoHelpers.getElementIndex($element.parentElement) }, panelIndexVisible: $root.currentPanelIndex">
+            <div class="container-content">
+                <oobe-header params="title: title, subtitle: subtitle, supportClickableTitle: $root.supportClickableTitle"></oobe-header>
+                <!-- if there is no items array render the keyboard image and not the list -->
+                <!--ko if: !$data.items -->
+                <div class="icon-container">
+                    <div id="keyboardGlyph" class="icon-oobe icon-keyboard icon-large" role="img" data-bind="attr: {'aria-label': $root.resourceStrings['keyboardImageLabel']}"></div>
+                </div>
+                <!-- /ko -->
+                <!-- ko if: $data.items-->
+                <div class="content-box">
+                    <oobe-listview autofocus params="items: items, selectedItem: selectedItem, listAccessibleName: $root.resourceStrings[listAccessibleNameResourceId]">
+                        <div class="listItemHeader" data-bind="text: name"></div>
+                    </oobe-listview>
+                </div>
+                <!-- /ko -->
+            </div>
+            <oobe-footer params="flexEndButtons: footerButtons"></oobe-footer>
+        </div>
+    </script>
+    <div class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction">
+        <div data-bind="template: { name: 'panel-template', data: {
+                        title: $data.keyboardSelectionTitle,
+                        subtitle: $root.resourceStrings.keyboardSelectionSubtitle,
+                        items: $data.keyboardsForDefaultInputLanguage, selectedItem: $data.selectedKeyboardForDefaultInputLanguage, listAccessibleNameResourceId: 'keyboardSelectionLabel',
+                        footerButtons: [{ buttonText: $root.resourceStrings.yesButtonText, buttonClickHandler: $root.nextStep, disableControl: $root.disableControl, isPrimaryButton: true, automationId: 'OOBEKeyboardYesButton'}],
+                        voiceConversationHandler: keyboardsForDefaultInputLanguageVoiceConversation,
+                        onInit: keyboardSelectionInit
+                     }}"></div>
+
+        <div data-bind="template: { name: 'panel-template', data: {
+                        title: $root.resourceStrings['extraKeyboardChoiceTitle'],
+                        subtitle: '',
+                        footerButtons: [{ buttonText: $root.resourceStrings.addLayoutButtonText, buttonClickHandler: $root.nextStep, disableControl: $root.disableControl}, {buttonText: $root.resourceStrings.skipButtonText, buttonClickHandler: $root.completeKeyboardFlow, autoFocus: true, disableControl: $root.disableControl, isPrimaryButton: true, automationId: 'OOBEKeyboardSkipButton'}],
+                        voiceConversationHandler: extraKeyboardVoiceConversation,
+                        onInit: extraKeyboardChoiceInit
+                     }}"></div>
+
+        <div data-bind="template: { name: 'panel-template', data: {
+                        title: $root.resourceStrings['extraKeyboardLangSelectTitle'],
+                        subtitle: '',
+                        items: $data.inputLanguages, selectedItem: $data.selectedInputLanguage, listAccessibleNameResourceId: 'inputLanguageSelection',
+                        footerButtons: [{ buttonText: $root.resourceStrings.nextButtonText, buttonClickHandler: $root.nextStep, disableControl: $root.disableControl, isPrimaryButton: true}],
+                        voiceConversationHandler: inputLanguageVoiceConversation
+                     }}"></div>
+
+        <div data-bind="template: { name: 'panel-template', data: {
+                        title: $root.resourceStrings['extraKeyboardSelectionTitle'],
+                        subtitle: '',
+                        items: $data.keyboardsForInputLanguage, selectedItem: $data.selectedKeyboardForInputLanguage, listAccessibleNameResourceId: 'keyboardSelectionLabel',
+                        footerButtons: [{ buttonText: $root.resourceStrings.addLayoutButtonText, buttonClickHandler: $root.nextStep, disableControl: $root.disableControl, isPrimaryButton: true}],
+                        voiceConversationHandler: keyboardsForInputLanguageVoiceConversation
+                     }}"></div>
+    </div>
+</body>
+</html>

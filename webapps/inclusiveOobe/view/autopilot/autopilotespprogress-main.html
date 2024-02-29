@@ -1,0 +1,373 @@
+<!-- Copyright (C) Microsoft. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="en" id="_htmlRoot" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/autopilot/autopilotespprogress-page.js" src="/lib/require.js"></script>
+
+    <!-- General styling -->
+    <style>
+        .esp-no-scroll {
+            overflow-y: hidden;
+        }
+
+        .inactive {
+            opacity: 0.6;
+        }
+
+        .icon-gears:before {
+            content: "\E713";
+        }
+
+        .icon-devices:before {
+            content: "\E975";
+        }
+
+        .icon-users:before {
+            content: "\E716";
+        }
+
+        .icon-base:before {
+            content: "\F136";
+        }
+
+        .icon-fill:before {
+            content: "\F137";
+        }
+
+        table,
+        td {
+            border: none !important;
+            vertical-align: top !important;
+            background-color: transparent !important;
+        }
+    </style>
+
+    <!-- Inclusive Blue styling -->
+    <div data-bind="ifnot: $root.isLiteWhitePersonality">
+        <style>
+            .esp-content-box {
+                height: 55vh !important;
+            }
+
+            .center-align {
+                text-align: center !important;
+            }
+
+            .glyph {
+                font-family: "OobeMDL2";
+                font-style: normal;
+                font-size: 48px;
+                color: #ffffff;
+            }
+
+            .icon-checkmark:before {
+                content: "\F13E";
+                left: 36px;
+                font-size: 24px;
+            }
+
+            .icon-exmark:before {
+                content: "\F13D";
+                font-size: 24px;
+            }
+
+            .icon-chevron-up:before {
+                content: "\E70E";
+                font-family: "OobeMDL2";
+                font-weight: bold;
+                font-size: 14px;
+                height: 20px;
+                color: black;
+            }
+
+            .icon-chevron-down:before {
+                content: "\E70D";
+                font-family: "OobeMDL2";
+                font-weight: bold;
+                font-size: 14px;
+                height: 20px;
+                color: black;
+            }
+
+            .base,
+            .fill,
+            .overlay {
+                left: 30px;
+                margin-top: 18px;
+                position: absolute;
+                font-size: 24px;
+            }
+
+            .base {
+                z-index: 2;
+            }
+
+            .fill {
+                z-index: 3;
+            }
+
+            .overlay {
+                z-index: 4;
+            }
+
+            .success {
+                color: #008a17;
+            }
+
+            .failure {
+                color: #d82128;
+            }
+
+            td {
+                vertical-align: top;
+                padding-bottom: 0px;
+                padding-left: 0px;
+                padding-right: 0px;
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            .glyph-cell {
+                padding-top: 1em;
+            }
+            .status,
+            div > p {
+                opacity: 0.6;
+                margin-bottom: 0px;
+                margin-top: 0px;
+                padding-left: 16px;
+            }
+
+            .category {
+                font-family: 'Segoe UI Semibold';
+                padding-left: 16px;
+            }
+
+            .categoryCell {
+                padding-top: 10px;
+            }
+
+            .error {
+                color: #ffff00;
+            }
+
+            /* Overwrite text color in non-high contrast mode for better readability */
+            @media not all and (-ms-high-contrast) {
+                #idContinueAnywayLink:hover,
+                #idViewDiagnosticsLink:hover {
+                    color: HighlightText;
+                }
+            }
+    </style>
+        </style>
+    </div>
+
+    <!-- Desktop Lite styling -->
+    <div data-bind="if: $root.isLiteWhitePersonality">
+        <style>
+            .scroll-view {
+                position: fixed;
+                height: calc(100% - 13.5em) !important;
+            }
+
+            .esp-body-container {
+                max-width: calc(100% - 25px) !important;
+                padding-left: 0px !important;
+                margin-left: 0px !important;
+                background-color: transparent !important;
+            }
+
+            .body-sub-header {
+                color: WindowText;
+                opacity: 0.6;
+            }
+
+            .icon-checkmark-lite:before {
+                content: "\F13E";
+                color: #ffffff;
+            }
+
+            .status-icon {
+                display: inline-block !important;
+                font-family: "OobeMDL2";
+                font-style: normal;
+                font-size: 20px;
+                line-height: 23.44px;
+                height: 20px;
+                width: 20px;
+                margin: 0.5em;
+                background-color: rgba(0, 0, 0, 0.0) !important;
+            }
+
+            .glyph-lite {
+                display: inline-block !important;
+                align-items: center;
+                font-family: "OobeMDL2";
+                font-size: 20px;
+                line-height: 23.44px;
+            }
+
+            .status-icon-padding {
+                padding-right: 5px;
+            }
+    
+            .icon-exmark-lite:before {
+                content: "\F13D";
+            }
+
+            .icon-chevron-up:before {
+                font-family: "OobeMDL2";
+                content: "\E70E";
+                font-weight: bold;
+                font-size: 14px;
+                height: 20px;
+                padding-top: 0.5em;
+                color: ButtonText !important;
+            }
+
+            .icon-chevron-down:before {
+                font-family: "OobeMDL2";
+                content: "\E70D";
+                font-weight: bold;
+                font-size: 14px;
+                height: 20px;
+                padding-top: 0.25em;
+                color: ButtonText !important;
+            }
+    
+            .base-lite {
+                position: absolute;
+                font-size: 14px;
+                z-index: 2;
+            }
+    
+            .overlay-lite {
+                position: relative;
+                font-size: 14px;
+                z-index: 3;
+            }
+    
+            .success-lite {
+                color: #00b394;
+            }
+    
+            .failure-lite {
+                color: #eb0716;
+            }
+
+            .errorText {
+                color: #cd320e;
+            }
+
+            .glyph-cell-lite {
+                width: 0px;
+            }
+
+            .category-label-lite {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 20px;
+                line-height: 20px !important;
+                padding: 0px !important;
+                margin: 0px !important;
+            }
+
+            .subcategory-label-cell {
+                padding-bottom: 1em;
+            }
+
+            .subcategory-label-lite {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 15px;
+                opacity: 0.6;
+                line-height: 20px !important;
+                padding-top: 3px !important;
+                padding-bottom: 3px !important;
+                margin: 0px !important;
+            }
+
+            .status-lite {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 15px;
+                line-height: 20px;
+                opacity: 0.6;
+                position: relative;
+            }
+
+            .buttonCell-lite {
+                position: absolute;
+                right: 0px;
+                padding-right: 1.5em;
+                background-color: rgba(0, 0, 0, 0.0) !important;
+            }
+
+            .hyperlink-blob {
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 13px;
+                line-height: 15px;
+            }
+
+            .table {
+                display: table;
+            }
+
+            .table-row {
+                display: table-row;
+            }
+
+            .table-cell {
+                display: table-cell;
+            }
+        </style>
+    </div>
+</head>
+<body class="webapp-inner">
+    <div class="body-container" id="esp-body-container">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: $root.pageTitle, subtitle: $root.pageLeadText"></oobe-header>
+
+            <!-- Inclusive Blue View -->
+            <div data-bind="ifnot: $root.isLiteWhitePersonality" class="no-scroll">
+                <div class="content-box esp-content-box">
+                    <div class="scroll-view" role="group">
+                        <table id="categoriesTable"></table>
+                    </div>
+                </div>
+
+                <div class="template-tooltip tooltipType_error center-align" data-bind="text: errorMessage"></div>
+                <div class="template-tooltip tooltipType_error" data-bind="text: infoMessage"></div>
+            </div>
+
+            <!-- Desktop Lite View -->
+            <div data-bind="if: $root.isLiteWhitePersonality">
+                <p id="subheaderText" class="body-sub-header" data-bind="html: $root.subheaderText, css: { errorText: $root.errorOccurred() }" aria-live="polite" aria-role="alert"></p>
+
+                <div class="scroll-view">
+                    <div class="content-box esp-body-container" role="group">
+                        <div id="categoriesTableLite" class="table"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-bind="if: $root.isLiteWhitePersonality">
+            <div class="hyperlink-blob>">
+                <p id="viewDiagnosticsBlob" data-bind="visible: $root.showDiagnosticsHyperlinkEnabled">
+                    <span data-bind="text: viewDiagnosticsBlobText"></span> <a class="link" id="idViewDiagnosticsLink" data-bind="text: $root.viewDiagnosticsHyperlinkText, click: $root.viewDiagnosticsButtonClick" role="button" tabindex="0"></a>.
+                </p>
+                <a class="link" id="idContinueAnywayLink" data-bind="visible: $root.showContinueAnywayHyperlinkEnabled, text: $root.continueAnywayHyperlinkText, click: $root.continueAnywayButtonClick" role="button" tabindex="0"></a>
+                <a class="link" data-bind="visible: $root.showSignOutHyperlinkEnabled, text: $root.signOutAnywayHyperlinkText, click: $root.signOutButtonClick" role="button" tabindex="0"></a>
+            </div>
+        </div>
+
+        <oobe-footer class="holo-small-button" params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

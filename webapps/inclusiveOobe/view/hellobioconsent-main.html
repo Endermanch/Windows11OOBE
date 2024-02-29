@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/inclusive-listview.css" />
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/hellobioconsent-page.js" src="/lib/require.js"></script>
+
+    <style>
+        .container-content {
+            overflow-x: auto !important;
+        }
+
+        .content-box {
+            margin: 16px auto !important; /*this is to reduce vertical spacing (normally 32px) between header / footer and the list*/
+            width: unset !important; /*this lets the list view extend to its min width of 300px*/
+        }
+
+        #bioConsentFooter {
+            min-width: 300px; /*this matches min-width of oobe-listview*/
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+        #learnMoreFooter {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+    </style>
+</head>
+    <body class="webapp-inner">
+        <div class="body-container">
+            <!-- ko if: bioConsentVisible -->
+            <div class="container-content">
+                <oobe-header params="title: resources.BioConsentTitle, subtitle: resources.BioConsentSubtitle"></oobe-header>
+                <div class="content-box">
+                    <oobe-listview autofocus params="items: items, selectedItem: selectedItem, selectionFollowsFocus: false, binaryChoice: true, alwaysShowScrollbar: true, listAccessibleName: resources.BioConsentListAccessibleName">
+                        <div class="list-icon" role="presentation" aria-hidden="true">
+                            <i class="icon" role="presentation" data-bind="html: icon"></i>
+                        </div>
+                        <div class="list-text">
+                            <div class="secondary-text" data-bind="text: title"></div>
+                            <div class="" data-bind="text: descriptionText"></div>
+                        </div>
+                    </oobe-listview>
+                </div>
+                <div id="bioConsentFooter">
+                    <oobe-button params="buttonText: learnMoreButton.buttonText, buttonClickHandler: learnMoreButton.buttonClickHandler, disableControl: learnMoreButton.disableControl"></oobe-button>
+                    <oobe-button params="buttonText: nextButton.buttonText, isPrimaryButton: true, buttonClickHandler: nextButton.buttonClickHandler, disableControl: nextButton.disableControl"></oobe-button>
+                </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: learnMoreVisible -->
+            <div class="container-content">
+                <oobe-header params="title: resources.HelloLearnMoreLinkText"></oobe-header>
+                <div class="iframe-row med-iframe">
+                    <iframe class="eula-iframe" x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" id="learnMoreIFrame" data-bind="iframeContent: { content:$root.learnMoreContent, dir:document.documentElement.dir, focusBody: true }, attr: { 'aria-label': resources.HelloLearnMoreLinkText }"></iframe>
+                </div>
+                <div id="learnMoreFooter">
+                    <oobe-button params="buttonText: learnMoreContinueButton.buttonText, isPrimaryButton: true, buttonClickHandler: learnMoreContinueButton.buttonClickHandler, disableControl: learnMoreContinueButton.disableControl"></oobe-button>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </body>
+</html>

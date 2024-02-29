@@ -1,0 +1,126 @@
+<!-- Copyright (C) Microsoft. All rights reserved. -->
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/autopilot/exportDiagnostics-page.js" src="/lib/require.js"></script>
+    
+    <style>
+        /* Icons */
+
+        .statusIcon {
+            font-family: "OobeMDL2";
+            font-style: normal;
+            font-size: 21px;
+            color: #FFFFFF;
+            height: 21px;
+            width: 21px;
+        }
+
+        .icon-check:before {
+            content: "\F13E";
+            border-radius: 50%;
+            background-color: #57A300;
+            padding-left: 2px;
+            padding-bottom: 2px;
+        }
+
+        .icon-error:before {
+            content: "\F13D";
+            border-radius: 50%;
+            background-color: #E81123;
+            padding-left: 2px;
+            padding-bottom: 2px;
+        }
+
+        .icon-inProgress:before {
+            content: "\F752";
+            border-radius: 50%;
+            background-color: #015CDA;
+        }
+
+        .icon-warning:before {
+            content: "\F12F";
+            position: absolute;
+            font-size: 32px;
+        }
+
+        .icon-warning-deployment:before {
+            transform: translate(-78%, -31.5%);
+        }
+
+        .icon-warning-triangleBackground {
+            width: 0;
+            position: absolute;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 21px solid #DB7500;
+            padding: 0px;
+        }
+
+        /* Error pages */
+
+        .errorAdditionalInformation {
+            margin-top: 6em;
+        }
+
+        .boldErrorAdditionalInfo {
+            font-weight: bold;
+        }
+
+        .diagnosticError,
+        .diagnosticLogExportError {
+            margin-top: -4em;
+        }
+
+        .errorInformation {
+            margin: 0.5em;
+        }
+    </style>
+</head>
+
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header params="title: pageTitle"></oobe-header>
+
+            <div class="diagnosticError text-align-center" data-bind="visible: shouldShowError">
+                <p data-bind="text: errorSubHeader"></p>
+                <div class="errorAdditionalInformation">
+                    <h4 class="boldErrorAdditionalInfo" data-bind="text: ERROR_ADDITIONAL_INFO_HEADING"></h4>
+                    <p class="errorInformation" data-bind="text: errorCode"></p>
+                    <p class="errorInformation" data-bind="text: errorDescription"></p>
+                </div>
+            </div>
+
+            <div class="diagnosticData-logsExport" data-bind="visible: shouldShowLogsExportProgress">
+                <!-- Export logs spinner -->
+                <div class="control-progress align-vertical-center" data-bind="visible: shouldShowLogsExportSpinner">
+                    <progress class="win-ring win-large ring-primary withText"></progress>
+                    <h4 data-bind="text: DIAGNOSTICS_PAGE_LOGS_EXPORT_PROGRESS_TEXT" aria-live="assertive" aria-role="alert" tabindex="0">></h4>
+                </div>
+                <!-- Log export error page -->
+                <div class="diagnosticLogExportError text-align-center" data-bind="visible: shouldShowLogsExportError">
+                    <p data-bind="text: logExportErrorSubheader"></p>
+                </div>
+                <!-- Export logs success view -->
+                <div class="export-logs-success-view-blob body-sub-header" data-bind="visible: $root.logExportSucceeded">
+                    <p data-bind="text: $root.LOG_EXPORT_SUCCEEDED"></p>
+                </div>
+            </div>
+        </div>
+
+        <oobe-footer params="flexEndButtons: flexEndButtons"></oobe-footer>
+    </div>
+</body>
+
+</html>

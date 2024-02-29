@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/autopilotwhiteglovelanding-page.js" src="/lib/require.js"></script>
+    <!-- Default Inclusive Blue styling -->
+    <div data-bind="if: $root.shouldShowDefaultView">
+        <style>        
+            .category-box table {
+                width: 100%;
+            }
+
+            td:nth-child(1) {
+                text-align: right;
+                padding-right: 1.5em;
+                padding-bottom: 1.5em;
+                font-family: 'Segoe UI Bold';
+            }
+
+            td:nth-child(2) {
+                padding-bottom: 1.5em;
+                max-width: 50%;
+                font-family: 'Segoe UI Semibold';
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .category-box {
+                width: 100%;
+                margin-top: 10%;
+                margin-left: 15%;
+            }
+
+            .qr {
+                max-height: 50%;
+                max-width: 50%;
+                display: block; 
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 15px;
+            }
+
+            .qr-category-container {
+                height: 50%;
+            }
+            
+            .right {
+                float: right;
+            }
+
+            .left {
+                float: left;
+            }
+
+            .error {
+                color: #ffff00;
+            }
+        </style>
+    </div>
+
+    <!-- Desktop Lite styling -->
+    <div data-bind="if: $root.shouldShowDesktopLiteView">
+        <style>
+            .instructionSubtitle {
+                color: #000000;
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 16px;
+                line-height: 19px;
+            }
+
+            p {
+                font-family: Segoe UI;
+            }
+
+            td:nth-child(1) {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0.1em;
+                margin: 0;
+                font-size: 16px;
+                line-height: 19px;
+            }
+
+            .category-box-lite {
+                width: 100%;
+                padding-top: 3%;
+                table-layout: fixed;
+            }
+
+            .category-lite {
+                font-weight: bold;
+                color: rgba(0, 0, 0, 0.6);
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-weight: 700;
+                padding-bottom: 1.5em;
+            }
+
+            .value-lite {
+                color: rgba(0, 0, 0, 0.6);
+                font-family: "Segoe UI Variable", "Segoe UI";
+            }
+
+            .instructionsBlob {
+                color: rgba(0, 0, 0, 0.6);
+                font-family: "Segoe UI Variable", "Segoe UI";
+                font-size: 14px;
+                line-height: 21px;
+                padding-top: 3%;
+            }
+
+            .qr {
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 15px;
+                display: block; 
+                padding-top: 3%;
+            }
+        </style>
+    </div>
+</head>
+<body class="webapp-inner">
+    <!-- Default view -->
+    <div class="body-container" data-bind="visible: $root.shouldShowDefaultView">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: title"></oobe-header>
+            <div class="qr-category-container">
+                <div class="content-box left" id="categoriesBox">
+                    <table class="category-box" id="categories" role="presentation">
+                        <tr>
+                            <td class="category" data-bind="text: organizationText"></td>
+                            <td class="status" id="organization" data-bind="text: organizationName"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" data-bind="text: profileText"></td>
+                            <td class="status" id="profile" data-bind="text: profileName"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" data-bind="text: assignedUserText"></td>
+                            <td class="status" id="assignedUser" data-bind="text: assignedUserName"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="content-box right" id="qrContent">
+                    <img class="qr" id="qrAssignmentCode" />
+                </div>
+            </div>
+            <div class="control-progress" data-bind="visible: IsDJPPLoading">
+                <progress class="win-ring win-medium withText"></progress>
+            </div>
+            <p data-bind="text: subHeaderText, css: provisioningTextStyle"></p>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: flexStartHyperLinks, flexEndButtons: flexEndButtons"></oobe-footer>
+    </div>
+
+    <!-- Desktop Lite view -->
+    <div class="body-container" data-bind="visible: $root.shouldShowDesktopLiteView">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: $root.title"></oobe-header>
+            <p id="instructionSubtitle" class="body-sub-header instructionSubtitle" data-bind="html: $root.instructionSubtitle"></p>
+
+            <div id="scrollableSection" class="scroll-view">
+                <table id="deploymentInfoBlob" class="category-box-lite" id="categories" role="presentation">
+                    <tr>
+                        <td>
+                            <span class="category-lite" data-bind="text: $root.organizationText"></span>
+                            <span class="value-lite" id="organization" data-bind="text: $root.organizationName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="category-lite" data-bind="text: $root.profileText"></span>
+                            <span class="value-lite" id="profile" data-bind="text: $root.profileName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="category-lite" data-bind="text: $root.assignedUserText"></span>
+                            <span class="value-lite" id="assignedUser" data-bind="text: $root.assignedUserName"></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <div id="instructionsBlob" class="instructionsBlob">
+                    <p class="instructionsIntroText" data-bind="text: $root.instructionsIntroText"></p>
+                    <ol>
+                        <li data-bind="text: $root.scanQRCodeWithAppText"></li>
+                        <li data-bind="text: $root.makeAnyNeededChangesText"></li>
+                        <li>
+                            <span data-bind="text: $root.selectText"></span> <a class="link" tabindex="0" role="link"
+                            data-bind="text: $root.refreshText, click: $root.onRefreshClickAsync, event: {keypress: $root.onRefreshKeyPressAsync}"></a>.
+                        </li>
+                      </ol>
+                </div>
+
+                <img id="qrCodeImageLite" class="qr" />
+            </div>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+
+    <!-- Hybrid AADJ progress animation view -->
+    <div class="body-container" data-bind="visible: $root.shouldShowHybridAadjProgress">
+        <div class="container-content no-scroll">
+            <oobe-header params="title: $root.title"></oobe-header>
+            <oobe-light-progress params="progressText: $root.hybridAadjLoadingText" class="app-content"></oobe-light-progress>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

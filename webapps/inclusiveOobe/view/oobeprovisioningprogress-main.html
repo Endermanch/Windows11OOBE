@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobeprovisioningprogress-page.js" src="/lib/require.js"></script>
+
+    <style>
+        .glyph {
+            font-family: "OobeMDL2";
+            font-style: normal;
+            font-size: 48px;
+            color: #ffffff;
+        }
+
+        .inactive {
+            opacity: 0.6;
+        }
+
+        .icon-gears:before {
+            content: "\E713";
+        }
+
+        .icon-devices:before {
+            content: "\E975";
+        }
+
+        .icon-users:before {
+            content: "\E716";
+        }
+
+        .icon-base:before {
+            content: "\F136";
+        }
+
+        .icon-fill:before {
+            content: "\F137";
+        }
+
+        .icon-completed:before {
+            content: "\F13E";
+        }
+
+        .icon-failed:before {
+            content: "\F13D";
+        }
+
+        .base,
+        .fill,
+        .overlay {
+            left: 34px;
+            position: absolute;
+            font-size: 24px;
+        }
+
+        .base {
+            z-index: 2;
+        }
+
+        .fill {
+            z-index: 3;
+        }
+
+        .overlay {
+            z-index: 4;
+        }
+
+        .success {
+            color: #008a17;
+        }
+
+        .failure {
+            color: #d82128;
+        }
+
+        td {
+            border: none;
+            vertical-align: top;
+            padding-bottom: 2.5em;
+            padding-left: 0;
+            margin-left: 0;
+        }
+
+        .glyph-cell {
+            padding-top: 1em;
+            padding-right: 24px;
+        }
+
+        .status,
+        div > p {
+            opacity: 0.6;
+            margin-bottom: 0px;
+            margin-top: 0px
+        }
+
+        .category {
+            font-family: 'Segoe UI Semibold';
+        }
+
+        #category-button {
+            border: none;
+            margin-top: -12px;
+            margin-bottom: -12px;
+        }
+
+        #category-button:active {
+            background: none;
+        }
+
+        .error {
+            color: #ffff00;
+        }
+    </style>
+</head>
+
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header params="title: EnrollmentFinishedTitle, subtitle: EnrollmentFinishedLeadText"></oobe-header>
+
+            <div class="content-box">
+                <div class="scroll-view" role="group">
+                    <table>
+                        <tr>
+                            <td class="glyph-cell">
+                                <div class="glyph">
+                                    <span class="icon-gears" />
+                                    <span class="base icon-base" data-bind="visible: IsDevicePreparationStatusBadgeVisible"></span>
+                                    <span class="fill icon-fill" data-bind="visible: IsDevicePreparationStatusBadgeVisible, css: DevicePreparationStatusBadgeFill"></span>
+                                    <span class="overlay" data-bind="visible: IsDevicePreparationStatusBadgeVisible, css: DevicePreparationStatusBadgeIcon"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="category" data-bind="text: DevicePreparationText"></span>
+                                <button id="category-button" class="win-button alt-button" tabindex="0" data-bind="text: DevicePreparationShowDetailsText, visible: IsDevicePreparationDetailsVisible, click: toggleDevicePreparationDetails"></button>
+                                <p class="status" data-bind="text: DevicePreparationStatus, css: DevicePreparationStatusError, style: {opacity: DevicePreparationStatusOpacity}" />
+                                <div data-bind="visible: DevicePreparationDetails">
+                                    <progress id="progressBar" class="win-progress-bar win-large" data-bind="style: {visibility: DevicePreparationProgressVisibility}"></progress>
+                                    <p data-bind="text: DevicePreparationTPM" />
+                                    <p data-bind="text: DevicePreparationJoiningNetwork" />
+                                    <p data-bind="text: DevicePreparationRegisteringForMDM" />
+                                    <p data-bind="text: DevicePreparationPreparingForMDM" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="glyph-cell">
+                                <div class="glyph">
+                                    <span class="icon-devices" />
+                                    <span class="base icon-base" data-bind="visible: IsDeviceSetupStatusBadgeVisible"></span>
+                                    <span class="fill icon-fill" data-bind="visible: IsDeviceSetupStatusBadgeVisible, css: DeviceSetupStatusBadgeFill"></span>
+                                    <span class="overlay" data-bind="visible: IsDeviceSetupStatusBadgeVisible, css: DeviceSetupStatusBadgeIcon"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="category" data-bind="text: EnrollmentProgressDeviceSetupText"></span>
+                                <button id="category-button" class="win-button alt-button" tabindex="0" data-bind="text: DeviceSetupShowDetailsText, visible: IsDeviceSetupDetailsVisible, click: toggleDeviceSetupDetails"></button>
+                                <p class="status" data-bind="text: EnrollmentProgressDeviceSetupStatus, css: DeviceSetupStatusError, style: {opacity: DeviceSetupStatusOpacity}" />
+                                <div data-bind="visible: DeviceSetupDetails">
+                                    <progress id="progressBar" class="win-progress-bar win-large" data-bind="style: {visibility: DeviceSetupProgressVisibility}"></progress>
+                                    <p data-bind="text: EnrollmentProgressDeviceSetupPolicies" />
+                                    <p data-bind="text: EnrollmentProgressDeviceSetupCertificates" />
+                                    <p data-bind="text: EnrollmentProgressDeviceSetupNetwork" />
+                                    <p data-bind="text: EnrollmentProgressDeviceSetupApplication" />
+                                    <p data-bind="text: EnrollmentProgressDeviceSetupSubscription" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="glyph-cell">
+                                <div class="glyph">
+                                    <span class="icon-users" />
+                                    <span class="base icon-base" data-bind="visible: IsAccountSetupStatusBadgeVisible"></span>
+                                    <span class="fill icon-fill" data-bind="visible: IsAccountSetupStatusBadgeVisible, css: AccountSetupStatusBadgeFill"></span>
+                                    <span class="overlay" data-bind="visible: IsAccountSetupStatusBadgeVisible, css: AccountSetupStatusBadgeIcon"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="category" data-bind="text: EnrollmentProgressAccountSetupText"></span>
+                                <button id="category-button" class="win-button alt-button" tabindex="0" data-bind="text: AccountSetupShowDetailsText, visible: IsAccountSetupDetailsVisible, click: toggleAccountSetupDetails"></button>
+                                <p class="status" data-bind="text: EnrollmentProgressAccountSetupStatus, css: AccountSetupStatusError, style: {opacity: AccountSetupStatusOpacity}" />
+                                <div data-bind="visible: AccountSetupDetails">
+                                    <progress id="progressBar" class="win-progress-bar win-large" data-bind="style: {visibility: AccountSetupProgressVisibility}"></progress>
+                                    <p data-bind="text: EnrollmentProgressAccountAuthentication" />
+                                    <p data-bind="text: EnrollmentProgressAccountSetupPolicies" />
+                                    <p data-bind="text: EnrollmentProgressAccountSetupCertificates" />
+                                    <p data-bind="text: EnrollmentProgressAccountSetupNetwork" />
+                                    <p data-bind="text: EnrollmentProgressAccountSetupApplication" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="template-tooltip tooltipType_error" style="padding-top: 8px" data-bind="text: EnrollmentProgressNotifyOfNotificationText"></div>
+            <div class="template-tooltip tooltipType_error" style="padding-top: 8px" data-bind="text: infoMessage"></div>
+        </div>
+
+        <oobe-footer params="flexStartHyperLinks: flexStartHyperLinks, flexEndButtons: flexEndButtons"></oobe-footer>
+    </div>
+</body>
+
+</html>

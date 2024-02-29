@@ -1,0 +1,101 @@
+{
+  "oobeDefault": [
+    {
+      "name": "Welcome",
+      "resID": "WelcomeSection",
+      "visibleNodes": [
+        { "cxid": "OobeLanguage" },
+        { "cxid": "OobeWelcome" },
+        { "cxid": "SettingsSinglePage" },
+        { "cxid": "SettingsMultiPage" }
+      ]
+    },
+    {
+      "name": "Basics",
+      "resID": "BasicsSection",
+      "visibleNodes": [
+        { "cxid": "OobeRegion" },
+        { "cxid": "OobeKeyboard" },
+        { "cxid": "OobeDevicePairing" }
+      ]
+    },
+    {
+      "name": "Network",
+      "resID": "NetworkSection",
+      "visibleNodes": [
+        { "cxid": "OobeWireless" },
+        { "cxid": "OobeZdp" }
+      ]
+    },
+    {
+      "name": "Account",
+      "resID": "AccountSection",
+      "visibleNodes": [
+        { "cxid": "OobeEula" },
+        { "cxid": "OobeIDPS" },
+        { "cxid": "AAD" },
+        { "cxid": "OobeAAD" },
+        { "cxid": "MSA" },
+        { "cxid": "OobeMSA" },
+        { "cxid": "OobeMSAHello" },
+        { "cxid": "OobeMSANGCEnrollWithHello" },
+        { "cxid": "OobeMSANGCEnroll" },
+        { "cxid": "OobeMSAOfferStatic" },
+        { "cxid": "OobeMSACloudBackupRestore" },
+        { "cxid": "OobeMSAIncentiveConfirmation" },
+        { "cxid": "Local" },
+        { "cxid": "OobeLocal" },
+        { "cxid": "OobeLocalHello" },
+        { "cxid": "OobeLocalNGC" },
+        { "cxid": "MSAHello" },
+        { "cxid": "TeamAdminAccountSelector" },
+        { "cxid": "TeamAdminDisambiguation" },
+        { "cxid": "TeamDeviceAccountPageSelector" },
+        { "cxid": "TeamDeviceAccountList" },
+        { "cxid": "TeamDeviceAccount" },
+        { "cxid": "TeamFriendlyName" },
+        { "cxid": "TeamDomainJoin" },
+        { "cxid": "TeamGroupAdminAccount" }
+      ]
+    },
+    {
+      "name": "Services",
+      "resID": "ServicesSection",
+      "visibleNodes": [
+        { "cxid": "OobeOneDrive" },
+        { "cxid": "OneDrive" },
+        { "cxid": "OobeOffice" },
+        { "cxid": "Office" },
+        { "cxid": "OobePhonePairing" },
+        { "cxid": "PhonePairing" },
+        { "cxid": "CORTANA" },
+        { "cxid": "OobeCloudServicesExperimentation" },
+        { "cxid": "OobeCortana" },
+        { "cxid": "OobeUpdateSettings" },
+        { "cxid": "OobePreSettingsExperimentation" },
+        { "cxid": "OobeSettings" },
+        { "cxid": "OobeSettingsMultiPage" },
+        { "cxid": "OobeSettingsAadc" },
+        { "cxid": "OobePostSettingsExperimentation" },
+        { "cxid": "OemRegistration" },
+        { "cxid": "OobeOemRegistration" },
+        { "cxid": "OobeOutro" },
+        { "cxid": "PreAccountExperimentation" },
+        { "cxid": "PostAccountExperimentation" },
+        { "cxid": "BrowserSettings" },
+        { "cxid": "OobeGamepass" },
+        { "cxid": "OobeUserIntent" },
+        { "cxid": "RDXSETUP" },
+        { "cxid": "RDXSHUTDOWNS" },
+        { "cxid": "RDXADMIN" },
+        { "cxid": "RDXMSA" },
+        { "cxid": "ATest" },
+        { "cxid": "OobeA" },
+        { "cxid": "rdxLocal" },
+        { "cxid": "TeamTimeZone" },
+        { "cxid": "TeamBitlocker" },
+        { "cxid": "TeamFinalReboot" }
+      ]
+    }
+  ]
+}

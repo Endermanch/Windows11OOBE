@@ -1,0 +1,25 @@
+<div class="button-group space-between">
+    <div class="align-self-start">
+        <!-- ko foreach: flexStartButtons -->
+        <oobe-button params="buttonType: $data.buttonType, accessKey: $data.accessKey, buttonText: $data.buttonText, isVisible: $data.isVisible, isPrimaryButton: $data.isPrimaryButton, buttonClickHandler: $data.buttonClickHandler, disableControl: $data.disableControl, autoFocus: $data.autoFocus, id: $data.automationId"></oobe-button>
+        <!-- /ko -->
+        <!-- ko foreach: flexStartHyperLinks -->
+        <button class="win-button alt-button" style="max-width:448px;" data-bind="click: handler, disable: $data.disableControl, text: hyperlinkText, attr: {id: $data.automationId}"></button>
+        <!-- /ko -->
+    </div>
+    <div class="align-self-end">
+        <!--ko foreach: flexEndDropdowns -->
+        <select class="win-dropdown" role="combobox" data-bind="value: selectedValue, attr: {title: dropdownTitle}">
+            <!--ko foreach: dropdownOptions -->
+            <option data-bind="value: optionValue, text: optionText, attr: {title: optionText}"></option>
+            <!-- /ko -->
+        </select>
+        <!-- /ko -->
+        <!-- ko foreach: flexEndButtons -->
+        <oobe-button params="buttonType: $data.buttonType, accessKey: $data.accessKey, buttonText: $data.buttonText, isVisible: $data.isVisible, isPrimaryButton: $data.isPrimaryButton, buttonClickHandler: $data.buttonClickHandler, disableControl: $data.disableControl, autoFocus: $data.autoFocus, id: $data.automationId"></oobe-button>
+        <!-- /ko -->
+        <!-- ko foreach: flexEndHyperLinks -->
+        <button class="win-button alt-button" data-bind="click: handler, disable: $data.disableControl, text: hyperlinkText, attr: {id: $data.automationId}"></button>
+        <!-- /ko -->
+    </div>
+</div>

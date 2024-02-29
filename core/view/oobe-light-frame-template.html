@@ -1,0 +1,20 @@
+<div class="Container">
+    <div class="content" id="oobeLightFrameView">
+        <backstack-chrome-breadcrumb></backstack-chrome-breadcrumb>
+        <div class="graphic halfSection" role="img">
+            <div id="animation"></div>
+        </div>
+        <!-- light frame progress -->
+        <oobe-light-progress class="app-content"> </oobe-light-progress>
+        <!-- light frame content -->
+        <div class="controls halfSection" id="_view"></div>
+    </div>
+    <!-- light frame footer which only shows up for desktop -->
+    <!-- footer webview is inserted in next element via code, to avoid having an extraneous webview from KnockoutJS precreating templates and duplicating their DOM trees into the real page -->
+    <!-- ko if: showLightFooter -->
+    <div class="footerView" data-bind="addFooterWebView: true"></div>
+    <!-- /ko -->
+</div>
+
+
+

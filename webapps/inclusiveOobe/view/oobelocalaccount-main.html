@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/inclusive-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/inclusiveOobe/js/oobelocalaccount-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <script type="text/html" id="panel-template">
+        <div class="oobe-panel" data-bind="css: { hasError: ($data.errorText && $data.errorText() != '') },
+             attr: { 'data-panel-index': KoHelpers.getElementIndex($element.parentElement), 'data-panel-id': id }, panelIndexVisible: $root.currentPanelIndex">
+            <!-- ko if: !$root.learnMoreVisible() -->
+            <div class="container-content">
+                <oobe-header params="title: $root.resourceStrings[titleResourceId],
+                                     subtitle: $root.resourceStrings[subTitleResourceId]"></oobe-header>
+                <!-- ko if: !$root.isLiteWhitePersonality-->
+                <i class="icon icon-large icon-user icon-user-nofill" role="img" data-bind="attr: { 'aria-label': $root.resourceStrings.UserIconAriaLabel }"></i>
+                <!-- /ko -->
+                <div class="content-box input-container_withToolTip scrollable">
+                    <!-- ko if: $root.isLiteWhitePersonality-->
+                    <h3 class="input-label" data-bind="attr: { id: $data.labelResourceId }, text: $root.resourceStrings[labelResourceId]"></h3>
+                    <!-- /ko -->
+                    <oobe-textinput params="id: $data.id,
+                                        placeHolder: $root.resourceStrings[placeholderResourceId],
+                                        inputLabelId: $root.isLiteWhitePersonality ? $data.labelResourceId : null,
+                                        inputText: inputText,
+                                        inputType: $data.inputType,
+                                        errorText: $data.errorText,
+                                        ariaLabel: $data.ariaLabel,
+                                        showError: $data.errorText && ($data.errorText() != ''),
+                                        maxLength: maxLength,
+                                        autoFocus: true,
+                                        isAutoCorrectEnabled: false">
+                    </oobe-textinput>
+                    <!-- ko if: $root.isLiteWhitePersonality && $root.shouldShowOnlineAccountLink-->
+                    <div class="text-content-block">
+                        <a class="link" href="$root.onlineAccountLinkHandler" data-bind="click: $root.onlineAccountLinkHandler, text: $root.resourceStrings['UseOnlineAccountButtonText']"></a>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: $root.isLiteWhitePersonality && $root.shouldShowAgeConfirmationText-->
+                    <div class="text-content-block">
+                        <div class="text-content-header" data-bind="text: $root.resourceStrings['AgeConfirmationTitle']" role="heading" aria-level="2"></div>
+                        <div class="text-content-body" data-bind="text: $root.resourceStrings['AgeConfirmationSubtitle']"></div>
+                    </div>
+                    <div class="text-content-block">
+                        <!-- ko if: $root.isInternetAvailable-->
+                        <a class="link" href="$root.ageConfirmationLearnMoreLinkHandler" data-bind="click: $root.ageConfirmationLearnMoreLinkHandler, text: $root.resourceStrings['AgeConfirmationLearnMoreButtonText']"></a>
+                        <!-- /ko -->
+                        <!-- ko if: !$root.isInternetAvailable-->
+                        <div class="text-content-body" data-bind="text: $root.resourceStrings['AgeConfirmationOffline']" role="heading" aria-level="2"></div>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
+                </div>
+                <div class="voice-over" data-bind="html: $root.resourceStrings[voiceOverResourceId]"></div>
+                <div class="error-voice-over" data-bind="html: errorVoiceOver"></div>
+            </div>
+            <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: [{ automationId: 'OobeLocalNextButton', buttonText: $root.resourceStrings.NextButtonText, buttonClickHandler: $root.submitPanel, disableControl: $root.disableControl, isPrimaryButton: true}]"></oobe-footer>
+            <!-- /ko -->
+            <!-- ko if: $root.learnMoreVisible() -->
+            <div class="container-content">
+                <oobe-header params="title: $root.resourceStrings['AgeConfirmationLearnMoreTitle'],
+                                     subtitle: ''"></oobe-header>
+                <div class="iframe-row med-iframe">
+                    <iframe class="eula-iframe" x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" data-bind="iframeContent: { content:$root.learnMoreContent, dir:document.documentElement.dir, focusBody: true }, attr: { 'data-iframe-index': KoHelpers.getElementIndex($element.parentElement.parentElement.parentElement.parentElement), 'aria-label': $root.resourceStrings['AgeConfirmationLearnMoreTitle'] }"></iframe>
+                </div>
+                <oobe-footer params="flexEndButtons: [{ buttonText: $root.resourceStrings['AgeConfirmationContinueButtonText'], buttonClickHandler: $root.ageConfirmationLearnMoreContinueHandler, disableControl: $root.disableControl, isPrimaryButton: true}]"></oobe-footer>
+            </div>
+            <!-- /ko -->
+        </div>
+    </script>
+    <script type="text/html" id="panel-template-sqsa">
+        <div class="oobe-panel" data-bind="css: { hasError: ($data.errorText && $data.errorText() != '' && (!$data.errorTextDropdown || ($data.errorTextDropdown && $data.errorTextDropdown()))) },
+             attr: { 'data-panel-index': KoHelpers.getElementIndex($element.parentElement), 'data-panel-id': id }, panelIndexVisible: $root.currentPanelIndex">
+            <!-- ko if: !$root.learnMoreVisible() -->
+            <div class="container-content">
+                <oobe-header params="title: $root.resourceStrings[titleResourceId],
+                                     subtitle: $root.resourceStrings[subTitleResourceId]"></oobe-header>
+                <!-- ko if: !$root.isLiteWhitePersonality-->
+                <i class="icon icon-large icon-user icon-user-nofill" role="img" data-bind="attr: { 'aria-label': $root.resourceStrings.UserIconAriaLabel }"></i>
+                <!-- /ko -->
+                <div class="content-box scrollable">
+                    <!-- ko if: $root.isLiteWhitePersonality-->
+                    <h3 class="input-label" data-bind="text: $data.optionsPlaceholder"></h3>
+                    <!-- /ko -->
+                    <div class="template-input input-centered">
+                        <div class="input-errorDialog" data-bind="if: ($data.errorTextDropdown && ($data.errorTextDropdown() != ''))">
+                            <div class="errorDialog-dialogRoot tooltipType_error template-tooltip" aria-live="assertive" role="alert" data-bind="attr: { 'aria-label': $data.errorTextDropdown }">
+                                <p aria-hidden="true" data-bind="text: $data.errorTextDropdown"></p>
+                            </div>
+                        </div>
+                        <select id="securityQuestionDropdown" class="win-dropdown" role="combobox" autofocus=true
+                                data-bind="value: $data.selectedQuestion, attr: {title: $data.selectedQuestion}">
+                            <option data-bind="text: $data.optionsPlaceholder, attr: {title: $data.optionsPlaceholder}"></option>
+                            <!-- ko foreach: $data.optionDropdown -->
+                            <option data-bind="value: sqsaQuestionOption, text: sqsaQuestionOption, attr: {title: sqsaQuestionOption}"></option>
+                            <!-- /ko -->
+                        </select>
+                    </div>
+                    <oobe-textinput params="placeHolder: $root.resourceStrings[placeholderResourceId],
+                                            inputText: inputText,
+                                            inputType: $data.inputType,
+                                            errorText: $data.errorText,
+                                            ariaLabel: $data.ariaLabel,
+                                            showError: $data.errorText && ($data.errorText() != ''),
+                                            maxLength: maxLength,
+                                            id: 'securityTextInput',
+                                            isAutoCorrectEnabled: false">
+                    </oobe-textinput>
+                    <!-- ko if: $root.isLiteWhitePersonality && $root.shouldShowOnlineAccountLink-->
+                    <div class="text-content-block">
+                        <a class="link" href="$root.onlineAccountLinkHandler" data-bind="click: $root.onlineAccountLinkHandler, text: $root.resourceStrings['UseOnlineAccountButtonText']"></a>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: $root.isLiteWhitePersonality && $root.shouldShowAgeConfirmationText-->
+                    <div class="text-content-block">
+                        <div class="text-content-header" data-bind="text: $root.resourceStrings['AgeConfirmationTitle']" role="heading" aria-level="2"></div>
+                        <div class="text-content-body" data-bind="text: $root.resourceStrings['AgeConfirmationSubtitle']"></div>
+                    </div>
+                    <div class="text-content-block">
+                        <!-- ko if: $root.isInternetAvailable-->
+                        <a class="link" href="$root.ageConfirmationLearnMoreLinkHandler" data-bind="click: $root.ageConfirmationLearnMoreLinkHandler, text: $root.resourceStrings['AgeConfirmationLearnMoreButtonText']"></a>
+                        <!-- /ko -->
+                        <!-- ko if: !$root.isInternetAvailable-->
+                        <div class="text-content-body" data-bind="text: $root.resourceStrings['AgeConfirmationOffline']" role="heading" aria-level="2"></div>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
+                </div>
+                <div class="voice-over" data-bind="html: $root.resourceStrings[voiceOverResourceId]"></div>
+                <div class="error-voice-over" data-bind="html: errorVoiceOver"></div>
+            </div>
+            <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: [{ automationId: 'OobeLocalNextButton', buttonText: $root.resourceStrings.NextButtonText, buttonClickHandler: $root.submitPanel, disableControl: $root.disableControl, isPrimaryButton: true}]"></oobe-footer>
+            <!-- /ko -->
+            <!-- ko if: $root.learnMoreVisible() -->
+            <div class="container-content">
+                <oobe-header params="title: $root.resourceStrings['AgeConfirmationLearnMoreTitle'],
+                                     subtitle: ''"></oobe-header>
+                <div class="iframe-row med-iframe">
+                    <iframe class="eula-iframe" x-ms-format-detection="none" sandbox="allow-same-origin allow-scripts" data-bind="iframeContent: { content:$root.learnMoreContent, dir:document.documentElement.dir, focusBody: true }, attr: { 'data-iframe-index': KoHelpers.getElementIndex($element.parentElement.parentElement.parentElement.parentElement), 'aria-label': $root.resourceStrings['AgeConfirmationLearnMoreTitle'] }"></iframe>
+                </div>
+                <oobe-footer params="flexEndButtons: [{ buttonText: $root.resourceStrings['AgeConfirmationContinueButtonText'], buttonClickHandler: $root.ageConfirmationLearnMoreContinueHandler, disableControl: $root.disableControl, isPrimaryButton: true}]"></oobe-footer>
+            </div>
+            <!-- /ko -->
+        </div>
+    </script>
+    <main class="body-container" data-bind="oobePageDefaultAction: pageDefaultAction">
+        <div data-bind="template: { name: 'panel-template', data: {
+                                                        id: 'username',
+                                                        titleResourceId: 'UsernameTitle', subTitleResourceId: 'UserNameLeadHtml',
+                                                        labelResourceId: 'UserNameLabelText',
+                                                        placeholderResourceId: 'UserNamePlaceHolder',
+                                                        errorText: userNameErrorText,
+                                                        ariaLabel: usernameAriaLabel,
+                                                        onInit: userNameInit,
+                                                        onSubmit: onUserNameSubmit,
+                                                        onSubmitError: userNameErrorHandler,
+                                                        inputText: username, maxLength: 20,
+                                                        voiceOverResourceId: 'UserNameVoiceOver', errorVoiceOver: userNameVoiceOverErrorString
+                         } }"></div>
+        <div data-bind="template: { name: 'panel-template', data: {
+                                                        id: 'password',
+                                                        titleResourceId: 'PasswordTitle', subTitleResourceId: 'PasswordLeadHtml',
+                                                        placeholderResourceId: 'PasswordPlaceHolder', inputType: 'password',
+                                                        labelResourceId: 'PasswordLabelText',
+                                                        errorText: passwordErrorText,
+                                                        ariaLabel: passwordAriaLabel,
+                                                        onInit: passwordInit,
+                                                        onSubmit: onPasswordSubmit,
+                                                        onSubmitError: passwordErrorHandler,
+                                                        inputText: password, maxLength: 127,
+                                                        voiceOverResourceId: 'PasswordVoiceOver', errorVoiceOver: passwordVoiceOverErrorString
+                         } }"></div>
+        <div data-bind="template: { name: 'panel-template', data: {
+                                                        id: 'passwordConfirm',
+                                                        titleResourceId: 'PasswordConfirmTitle', subTitleResourceId: 'PasswordConfirmLeadText',
+                                                        labelResourceId: 'PasswordConfirmLabelText',
+                                                        placeholderResourceId: 'PasswordConfirmPlaceHolder', inputType: 'password',
+                                                        errorText: '',
+                                                        ariaLabel: passwordConfirmAriaLabel,
+                                                        onSubmit: onPasswordConfirmSubmit,
+                                                        onSubmitError: passwordConfirmErrorHandler,
+                                                        inputText: passwordConfirm, maxLength: 127,
+                                                        voiceOverResourceId: 'PasswordConfirmVoiceOver', errorVoiceOver: passwordConfirmVoiceOverErrorString
+                         } }"></div>
+        <!-- ko if: !showSecurityQuestionFeature -->
+        <div data-bind="template: { name: 'panel-template', data: {
+                                                        id: 'passwordHint',
+                                                        titleResourceId: 'PasswordHintTitle', subTitleResourceId: 'PasswordHintLeadText',
+                                                        placeholderResourceId: 'PasswordHintPlaceHolder',
+                                                        errorText: recoveryDataErrorText,
+                                                        onInit: passwordHintInit,
+                                                        onSubmit: onSubmitHint,
+                                                        onSubmitError: recoveryDataErrorHandler,
+                                                        onBackNavigate: backNavigateSkipPreviousPanel,
+                                                        inputText: passwordHint, maxLength: 127,
+                                                        voiceOverResourceId: 'PasswordHintVoiceOver', errorVoiceOver: recoveryDataVoiceOverErrorString
+                         } }"></div>
+        <!-- /ko -->
+        <!-- ko if: showSecurityQuestionFeature -->
+        <div data-bind="template: { name: 'panel-template-sqsa', data: {
+                                                        id: 'SQSAPanel',
+                                                        titleResourceId: 'SQSATitle', subTitleResourceId: 'SQSALeadHtml',
+                                                        placeholderResourceId: 'SecurityAnswerPlaceholder',
+                                                        errorText: recoveryDataErrorText,
+                                                        ariaLabel: SQSAAriaLabel,
+                                                        onInit: sqsaInit,
+                                                        onSubmit: onSubmitSQSA,
+                                                        onSubmitError: incompleteSQSAHandler,
+                                                        onBackNavigate: backNavigateSQSA,
+                                                        inputText: securityAnswer, maxLength: 225,
+                                                        optionsPlaceholder: securityQuestionPlaceholder,
+                                                        optionDropdown: securityQuestions,
+                                                        selectedQuestion: selectedQuestion,
+                                                        errorTextDropdown: securityQuestionErrorText,
+                                                        voiceOverResourceId: '', errorVoiceOver: recoveryDataVoiceOverErrorString
+                         } }"></div>
+        <!-- /ko -->
+    </main>
+</body>
+</html>

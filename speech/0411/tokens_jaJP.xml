@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tokens>
+  
+  <Category name="Voices" categoryBase="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore">
+    <Token name="MSTTS_V110_jaJP_SayakaM">
+      <String name="" value="Microsoft Sayaka Mobile - Japanese (Japan)" />
+      <String name="LangDataPath" value="%windir%\Speech_OneCore\Engines\TTS\ja-JP\MSTTSLocjaJP.dat" />
+      <String name="LangUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\ja-JP" />
+      <String name="VoicePath" value="%windir%\Speech_OneCore\Engines\TTS\ja-JP\M1041Sayaka" />
+      <String name="VoiceUpdateDataDirectory" value="%SystemDrive%\Data\SharedData\Speech_OneCore\Engines\TTS\ja-JP" />
+      <String name="411" value="Microsoft Sayaka Mobile - Japanese (Japan)" />
+      <String name="CLSID" value="{179F3D56-1B0B-42B2-A962-59B7EF59FE1B}" />
+      <Attribute name="Version" value="11.0" />
+      <Attribute name="Language" value="411" />
+      <Attribute name="Gender" value="Female" />
+      <Attribute name="Age" value="Adult" />
+      <Attribute name="DataVersion" value="11.0.2016.0221" />
+      <Attribute name="SharedPronunciation" value="" />
+      <Attribute name="Name" value="Microsoft Sayaka Mobile" />
+      <Attribute name="Vendor" value="Microsoft" />
+      <Attribute name="PersonalAssistant" value="1" />
+    </Token>
+  </Category> 
+
+</Tokens>
